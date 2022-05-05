@@ -19,16 +19,22 @@ public class exGraphics extends BorderPane {
         Text title = new Text("Exercise");
         title.setFont(new Font(30));
 
-
+        Text inputDes = new Text("Input your activities here:");
+        inputDes.setFont(new Font(15));
 
         Button input = new Button("Input");
         input.setFont(new Font(15));
 
+        Text logDes = new Text("Access your activities from today here:");
+        logDes.setFont(new Font(15));
+
+        Button log = new Button("Log");
+        log.setFont(new Font(15));
 
 
 
 
-        VBox components = new VBox(50, title, input);
+        VBox components = new VBox(50, title, inputDes, input, logDes, log);
         components.setAlignment(Pos.TOP_CENTER);
         this.setCenter(components);
 
