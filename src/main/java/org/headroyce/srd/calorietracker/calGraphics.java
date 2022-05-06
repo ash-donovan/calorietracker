@@ -3,6 +3,7 @@ package org.headroyce.srd.calorietracker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -23,7 +24,7 @@ public class calGraphics extends BorderPane {
         day = 1;
         days = new Button[5][7];
         monthText = new Text();
-
+        monthText.setText(calLogic.getMonthText(month));
 
         GridPane griddy = new GridPane();
         griddy.setGridLinesVisible(true);
@@ -64,8 +65,22 @@ public class calGraphics extends BorderPane {
                     counter = 1;
                 }
                 button.setText("" + counter);
+
+                button.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        Stage s = (Stage) calGraphics.this.getScene().getWindow();
+                        dayGraphics dayGraphic = new dayGraphics(month, counter);
+                        Scene dayScene = new Scene(dayGraphic, s.getWidth(), s.getHeight());
+                        s.setScene(dayScene);
+                        s.setTitle("" + month + "/" + counter);
+
+                    }
+                });
+
                 days[i][j] = button;
                 griddy.add(button, j, i);
+
             }
         }
 
@@ -73,10 +88,17 @@ public class calGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 month += 1;
+                monthText.setText(calLogic.getMonthText(month));
 
                 if(month > 12){
                     month = 1;
                 }
+
+                if(month < 1){
+                    month = 12;
+                }
+
+
 
                 int day = 1;
                 for(int i = 0; i < days.length; i++){
@@ -100,10 +122,16 @@ public class calGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 month -= 1;
+                monthText.setText(calLogic.getMonthText(month));
 
                 if(month > 12){
                     month = 1;
                 }
+
+                if(month < 1){
+                    month = 12;
+                }
+
 
                 int day = 1;
                 for(int i = 0; i < days.length; i++){
@@ -137,6 +165,8 @@ public class calGraphics extends BorderPane {
 
         HBox changeMonth = new HBox(backMonth, monthText, nextMonth );
         changeMonth.setSpacing(100);
+        changeMonth.setAlignment(Pos.CENTER);
+        this.setBottom(home);
         this.setTop(changeMonth);
         this.setCenter(griddy);
 
