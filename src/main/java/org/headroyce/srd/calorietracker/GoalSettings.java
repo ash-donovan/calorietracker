@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class GoalSettings extends BorderPane {
 
     private int goalNumber;
+    private String GML;
 
     public GoalSettings(Stage stage, settingsLogic logic) {
         Text title = new Text("Set A Goal");
@@ -57,11 +58,13 @@ public class GoalSettings extends BorderPane {
                     chooseCalorieGoal.getChildren().clear();
                     Text calorieText = new Text("I want to eat...");
                     Text calorieText2 = new Text("extra calories a day.");
+                    setGML("gain");
                     chooseCalorieGoal.getChildren().addAll(calorieText, calorieGoalSpinner, calorieText2);
                 }
 
                 if (maintain.isSelected()) {
                     chooseCalorieGoal.getChildren().clear();
+                    setGML("maintain");
                 }
 
                 if (lose.isSelected()) {
@@ -71,6 +74,7 @@ public class GoalSettings extends BorderPane {
 //                    Spinner calorieGoalSpinner = new Spinner(0, 500, 250, 25);
 //                    calorieGoalSpinner.setPrefWidth(stage.getWidth()/5);
                     chooseCalorieGoal.getChildren().addAll(calorieText, calorieGoalSpinner, calorieText2);
+                    setGML("lose");
                 }
             }
         });
@@ -83,8 +87,6 @@ public class GoalSettings extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
                 goalNumber = (int) calorieGoalSpinner.getValueFactory().getValue();
-                goalNumberText.setText("" + goalNumber);
-
             }
         });
 
@@ -98,40 +100,20 @@ public class GoalSettings extends BorderPane {
                 if (maintain.isSelected()) {
                     logic.setGoal(0);
                 }
-//
-//                SpinnerValueFactory chooseCalorieGoalFac = chooseCalorieGoal.getValueFactory();
-//
-//                int spinnerVal = (int) chooseCalorieGoal.;
-
                 if (gain.isSelected()) {
+                    logic.setGoal(goalNumber);
+                }
+                if (lose.isSelected()) {
+                    logic.setGoal(goalNumber * -1);
                 }
             }
         });
 
 
 
-        //set up spacers
-        Region spacer1 = new Region();
-        VBox.setVgrow(spacer1, Priority.ALWAYS);
-        Region spacer2 = new Region();
-        VBox.setVgrow(spacer2, Priority.ALWAYS);
-        Region spacer3 = new Region();
-        VBox.setVgrow(spacer3, Priority.ALWAYS);
-        Region spacer4 = new Region();
-        VBox.setVgrow(spacer4, Priority.ALWAYS);
-        Region spacer5 = new Region();
-        VBox.setVgrow(spacer5, Priority.ALWAYS);
-        Region spacer6 = new Region();
-        VBox.setVgrow(spacer6, Priority.ALWAYS);
-        Region topSpacer = new Region();
-        VBox.setVgrow(topSpacer, Priority.ALWAYS);
-        Region bottomSpacer = new Region();
-        VBox.setVgrow(bottomSpacer, Priority.ALWAYS);
-        Region bottomSpacer2 = new Region();
-        VBox.setVgrow(bottomSpacer2, Priority.ALWAYS);
 
-        VBox screenBox = new VBox(2, spacer1, spacer2, title, spacer3, goal, spacer4,
-                chooseCalorieGoal, spacer5, goalNumberText, set, bottomSpacer, bottomSpacer2);
+        VBox screenBox = new VBox(2, spacerMaker(), spacerMaker(), title, spacerMaker(), goal, spacerMaker(),
+                chooseCalorieGoal, spacerMaker(), set, spacerMaker(), spacerMaker());
         setCenter(screenBox);
 
 
@@ -154,7 +136,20 @@ public class GoalSettings extends BorderPane {
 
             }
         });
+    }
 
+    private boolean setGML(String s){
+        if (s == "maintain" || s == "gain" || s == "lose") {
+            GML = s;
+            return true;
+        }
+        return false;
+    }
+
+    private Region spacerMaker() {
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        return spacer;
     }
 
 }

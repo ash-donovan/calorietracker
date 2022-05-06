@@ -61,32 +61,12 @@ public class RmrCalculator extends BorderPane {
 
         Button calculate = new Button("Calculate");
 
-
-        Region spacer1 = new Region();
-        VBox.setVgrow(spacer1, Priority.ALWAYS);
-        Region spacer2 = new Region();
-        VBox.setVgrow(spacer2, Priority.ALWAYS);
-        Region spacer3 = new Region();
-        VBox.setVgrow(spacer3, Priority.ALWAYS);
-        Region spacer4 = new Region();
-        VBox.setVgrow(spacer4, Priority.ALWAYS);
-        Region spacer5 = new Region();
-        VBox.setVgrow(spacer5, Priority.ALWAYS);
-        Region spacer6 = new Region();
-        VBox.setVgrow(spacer6, Priority.ALWAYS);
-        Region topSpacer = new Region();
-        VBox.setVgrow(topSpacer, Priority.ALWAYS);
-        Region bottomSpacer = new Region();
-        VBox.setVgrow(bottomSpacer, Priority.ALWAYS);
-        Region bottomSpacer2 = new Region();
-        VBox.setVgrow(bottomSpacer2, Priority.ALWAYS);
-
         VBox warnings = new VBox(5);
 
 
-        VBox mainbox = new VBox(2, topSpacer, title, spacer1, system, metric, imperial, spacer2,
-                weightLabel, weight, spacer3, heightLabel, height, spacer4, ageLabel, age, spacer5,
-                sexLabel, sex, spacer6, calculate, warnings, bottomSpacer, bottomSpacer2);
+        VBox mainbox = new VBox(2, spacerMaker(), title, spacerMaker(), system, metric, imperial, spacerMaker(),
+                weightLabel, weight, spacerMaker(), heightLabel, height, spacerMaker(), ageLabel, age, spacerMaker(),
+                sexLabel, sex, spacerMaker(), calculate, warnings, spacerMaker(), spacerMaker());
         mainbox.setAlignment(Pos.CENTER);
         mainbox.setFillWidth(false);
         this.setCenter(mainbox);
@@ -159,15 +139,21 @@ public class RmrCalculator extends BorderPane {
                 Scene settingsScene = new Scene(setting, s.getWidth(), s.getHeight());
                 s.setScene(settingsScene);
                 s.setTitle("Settings");
-
             }
         });
     }
 
-    public RmrCalculator(Stage stage, settingsLogic logic, String s) {
-        if (s == "goal") {
 
-        }
+    /**
+     * generates blank regions to use as spacers
+     * spacers grow vertically automatically
+     * @return a blank region with a Vgrow of ALWAYS
+     */
+    private Region spacerMaker() {
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        return spacer;
     }
+
 
 }
