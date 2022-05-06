@@ -1,5 +1,7 @@
 package org.headroyce.srd.calorietracker;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,7 +14,9 @@ import javafx.stage.Stage;
 
 public class GoalSettings extends BorderPane {
 
-    public GoalSettings() {
+    private int goalNumber;
+
+    public GoalSettings(Stage stage, settingsLogic logic) {
         Text title = new Text("Set A Goal");
         title.setFont(new Font(30));
 
@@ -23,6 +27,7 @@ public class GoalSettings extends BorderPane {
         lose.setToggleGroup(chooseGoal);
         ToggleButton maintain = new ToggleButton("Maintain");
         maintain.setToggleGroup(chooseGoal);
+        maintain.setSelected(true);
 
         HBox g = new HBox(5, gain, maintain, lose);
         g.setAlignment(Pos.CENTER);
@@ -32,6 +37,76 @@ public class GoalSettings extends BorderPane {
 
         VBox goal = new VBox(10, goalText1, g, goalText2);
         goal.setAlignment(Pos.CENTER);
+
+
+
+
+        VBox chooseCalorieGoal = new VBox(10);
+        chooseCalorieGoal.setAlignment(Pos.CENTER);
+        Spinner calorieGoalSpinner = new Spinner(0, 500, 250, 25);
+        calorieGoalSpinner.setPrefWidth(stage.getWidth()/5);
+        calorieGoalSpinner.setEditable(true);
+
+
+
+
+        chooseGoal.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> changed,
+                                Toggle oldVal, Toggle newVal) {
+                if (gain.isSelected()) {
+                    chooseCalorieGoal.getChildren().clear();
+                    Text calorieText = new Text("I want to eat...");
+                    Text calorieText2 = new Text("extra calories a day.");
+                    chooseCalorieGoal.getChildren().addAll(calorieText, calorieGoalSpinner, calorieText2);
+                }
+
+                if (maintain.isSelected()) {
+                    chooseCalorieGoal.getChildren().clear();
+                }
+
+                if (lose.isSelected()) {
+                    chooseCalorieGoal.getChildren().clear();
+                    Text calorieText = new Text("I want to eat...");
+                    Text calorieText2 = new Text("less calories a day.");
+//                    Spinner calorieGoalSpinner = new Spinner(0, 500, 250, 25);
+//                    calorieGoalSpinner.setPrefWidth(stage.getWidth()/5);
+                    chooseCalorieGoal.getChildren().addAll(calorieText, calorieGoalSpinner, calorieText2);
+                }
+            }
+        });
+
+
+        Text goalNumberText = new Text("" + goalNumber);
+
+
+        calorieGoalSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+                goalNumber = (int) calorieGoalSpinner.getValueFactory().getValue();
+                goalNumberText.setText("" + goalNumber);
+
+            }
+        });
+
+
+
+        Button set = new Button("Set Goal");
+
+        set.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (maintain.isSelected()) {
+                    logic.setGoal(0);
+                }
+//
+//                SpinnerValueFactory chooseCalorieGoalFac = chooseCalorieGoal.getValueFactory();
+//
+//                int spinnerVal = (int) chooseCalorieGoal.;
+
+                if (gain.isSelected()) {
+                }
+            }
+        });
 
 
 
@@ -55,8 +130,12 @@ public class GoalSettings extends BorderPane {
         Region bottomSpacer2 = new Region();
         VBox.setVgrow(bottomSpacer2, Priority.ALWAYS);
 
-        VBox screenBox = new VBox(2, spacer1, spacer2, title, spacer3, goal, bottomSpacer, bottomSpacer2);
+        VBox screenBox = new VBox(2, spacer1, spacer2, title, spacer3, goal, spacer4,
+                chooseCalorieGoal, spacer5, goalNumberText, set, bottomSpacer, bottomSpacer2);
         setCenter(screenBox);
+
+
+
         screenBox.setAlignment(Pos.CENTER);
 
 //        this.checkChange(gain, maintain, lose);
@@ -77,10 +156,5 @@ public class GoalSettings extends BorderPane {
         });
 
     }
-
-//    public VBox checkChange(Button gain, Button maintain, Button lose) {
-//
-//        VBox setGoal = new VBox();
-//        return setGoal;
 
 }

@@ -89,7 +89,7 @@ public class settingGraphics extends BorderPane {
 
         goalButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                GoalSettings goalStuff = new GoalSettings();
+                GoalSettings goalStuff = new GoalSettings(stage, logic);
                 Scene goalScene = new Scene(goalStuff, stage.getWidth(), stage.getHeight());
                 stage.setScene(goalScene);
                 stage.show();
