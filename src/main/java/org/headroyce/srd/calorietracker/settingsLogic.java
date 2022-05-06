@@ -35,6 +35,10 @@ public class settingsLogic {
         age = 40;
     }
 
+    public void setGoal(int goal) {
+        this.netGoal = goal;
+    }
+
     public void setImperial(boolean n) {
         this.imperial = n;
     }
@@ -157,6 +161,7 @@ public class settingsLogic {
         return true;
 
     }
+
     public boolean setAge(String s){
         if (s == null || s == "") {
             return false;
@@ -189,6 +194,7 @@ public class settingsLogic {
         this.age = a;
         return true;
     }
+
     public boolean setSex(boolean s) {
         this.sex = s;        
         return true;
