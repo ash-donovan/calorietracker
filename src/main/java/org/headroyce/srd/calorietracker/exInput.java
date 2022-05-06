@@ -1,0 +1,57 @@
+package org.headroyce.srd.calorietracker;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+
+public class exInput extends BorderPane {
+
+    private Stage s;
+
+    public exInput(Stage stage){
+
+        Text title = new Text("Input your exercise");
+        title.setFont(new Font(30));
+
+        TextField exerciseName = new TextField();
+        TextField time = new TextField();
+
+        exerciseName.setPromptText("Name of Exercise");
+        time.setPromptText("Time spent");
+
+        HBox textFields = new HBox(exerciseName, time);
+        textFields.setAlignment(Pos.CENTER);
+        textFields.setSpacing(20);
+
+        Text metTitle = new Text("Your activity's MET (Metabolic equivalent of task)");
+        metTitle.setFont(new Font(20));
+
+        Text metDes = new Text("Your MET is the objective measure of the ratio of the rate at which a person expends energy, " +
+                "ralative to the mass of that person (Wikipedia).");
+        metDes.setTextAlignment(TextAlignment.CENTER);
+        metDes.setWrappingWidth(stage.getWidth()/2);
+        metDes.setFont(new Font(13));
+
+        Slider met = new Slider(0, 10, 5);
+        met.setShowTickMarks(true);
+        met.setShowTickLabels(true);
+        met.setMajorTickUnit(2);
+        met.setBlockIncrement(1);
+
+        VBox yur = new VBox(title, textFields, metDes, met);
+        yur.setAlignment(Pos.TOP_CENTER);
+        yur.setPadding(new Insets(25));
+        yur.setSpacing(25);
+        this.setTop(yur);
+
+    }
+
+}

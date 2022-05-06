@@ -54,6 +54,17 @@ public class exGraphics extends BorderPane {
             }
         });
 
+        input.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage s = (Stage) exGraphics.this.getScene().getWindow();
+                exInput exInput = new exInput(s);
+                Scene inputPage = new Scene(exInput, s.getWidth(), s.getHeight());
+                s.setScene(inputPage);
+                s.setTitle("Exercise Input");
+            }
+        });
+
         
     }
 
