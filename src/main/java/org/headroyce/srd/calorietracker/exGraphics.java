@@ -16,6 +16,8 @@ public class exGraphics extends BorderPane {
 
     public exGraphics() {
 
+
+
         Text title = new Text("Exercise");
         title.setFont(new Font(30));
 

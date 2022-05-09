@@ -1,5 +1,7 @@
 package org.headroyce.srd.calorietracker;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,9 +20,14 @@ import javafx.stage.Stage;
 
 public class exInput extends BorderPane {
 
+
+    private int metPass = 5;
     private Stage s;
 
     public exInput(Stage stage){
+
+        s = stage;
+
 
         Text title = new Text("Input your exercise");
         title.setFont(new Font(30));
@@ -50,7 +57,18 @@ public class exInput extends BorderPane {
         met.setMajorTickUnit(2);
         met.setBlockIncrement(1);
 
-        VBox yur = new VBox(title, textFields, metDes, met);
+        Text metVal = new Text("Your activity MET: " + met.getValue());
+        metVal.setFont(new Font(13));
+
+        met.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                metVal.setText("Your activity MET: " + newValue.intValue());
+                metPass = newValue.intValue();
+            }
+        });
+
+        VBox yur = new VBox(title, textFields, metDes, met, metVal);
         yur.setAlignment(Pos.TOP_CENTER);
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
@@ -70,7 +88,7 @@ public class exInput extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exInput.this.getScene().getWindow();
-                exGraphics exGraphic = new exGraphics(s);
+                exGraphics exGraphic = new exGraphics();
                 Scene exPage = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exPage);
                 s.setTitle("exGraphics");
