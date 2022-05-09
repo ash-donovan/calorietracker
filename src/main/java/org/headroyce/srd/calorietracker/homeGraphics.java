@@ -13,6 +13,7 @@ public class homeGraphics extends BorderPane {
 
     private Stage s;
     settingGraphics setting;
+    settingsLogic settingsLogic = new settingsLogic();
 
 
     public homeGraphics(Stage stage) {
