@@ -70,7 +70,7 @@ public class exInput extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exInput.this.getScene().getWindow();
-                exGraphics exGraphic = new exGraphics(s);
+                exGraphics exGraphic = new exGraphics();
                 Scene exPage = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exPage);
                 s.setTitle("exGraphics");

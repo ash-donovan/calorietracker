@@ -14,6 +14,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class dietGraphics extends BorderPane {
@@ -49,7 +52,7 @@ public class dietGraphics extends BorderPane {
                 Label spinnerLabel = new Label("Calories:");
                 Spinner<Integer> calCount = new Spinner<Integer>();
                 SpinnerValueFactory<Integer> valueFactory = new
-                        SpinnerValueFactory.IntegerSpinnerValueFactory(0,500,0);
+                        SpinnerValueFactory.IntegerSpinnerValueFactory(0,10000000,0);
                 calCount.setValueFactory(valueFactory);
                 calCount.setMaxSize(200,20);
                 calCount.setEditable(true);
@@ -70,12 +73,18 @@ public class dietGraphics extends BorderPane {
                     public void handle(ActionEvent actionEvent) {
                         name = foodName.getText();
                         calTake = calCount.getValue();
-                        items.add(name);
-                        allNames.add(name);
-                        calItems.add(calTake);
-                        cals.add(calTake);
 
                         addFood.close();
+
+                        try {
+                            PrintWriter out = new PrintWriter("dataStore");
+                            out.println(name + "," + calTake);
+
+                            out.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 
