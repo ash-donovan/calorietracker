@@ -11,7 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class RmrCalculator extends BorderPane {
@@ -143,12 +142,16 @@ public class RmrCalculator extends BorderPane {
         });
     }
 
+    private RmrCalculator(Stage stage, settingsLogic logic, String s) {
 
-    /**
-     * generates blank regions to use as spacers
-     * spacers grow vertically automatically
-     * @return a blank region with a Vgrow of ALWAYS
-     */
+    }
+
+
+
+        /**
+         * generates blank regions
+         * @return a blank region with a Vgrow of ALWAYS
+         */
     private Region spacerMaker() {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
