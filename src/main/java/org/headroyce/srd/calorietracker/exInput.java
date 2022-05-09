@@ -1,7 +1,11 @@
 package org.headroyce.srd.calorietracker;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -51,6 +55,28 @@ public class exInput extends BorderPane {
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
         this.setTop(yur);
+
+        Button back = new Button("Back");
+
+        HBox backButton = new HBox(back);
+        backButton.setAlignment(Pos.TOP_LEFT);
+
+        HBox wholePage = new HBox(backButton, yur);
+        this.setTop(wholePage);
+
+
+
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage s = (Stage) exInput.this.getScene().getWindow();
+                exGraphics exGraphic = new exGraphics(s);
+                Scene exPage = new Scene(exGraphic, s.getWidth(), s.getHeight());
+                s.setScene(exPage);
+                s.setTitle("exGraphics");
+
+            }
+        });
 
     }
 
