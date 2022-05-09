@@ -25,9 +25,6 @@ public class dayGraphics extends BorderPane {
             }
         });
 
-        date date = new date(month, day);
-
-
 
 
 

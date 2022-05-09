@@ -1,5 +1,7 @@
 package org.headroyce.srd.calorietracker;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,21 +14,29 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class dietGraphics extends BorderPane {
+
+    String name;
+    int calTake;
+    ArrayList<Integer> cals;
+    ArrayList<String> allNames;
 
     public dietGraphics() {
 
-        Button home = new Button("Home");
-        home.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Stage s = (Stage) dietGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
-                Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
-                s.setScene(homeScene);
-                s.setTitle("Home");
-            }
-        });
+        cals = new ArrayList<>();
+        allNames = new ArrayList<>();
+       ListView<String> names = new ListView<String>();
+       ObservableList<String> items = FXCollections.observableArrayList();
+        names.setItems(items);
+
+
+        ListView<Integer> calCounts = new ListView<Integer>();
+        ObservableList<Integer> calItems = FXCollections.observableArrayList();
+        calCounts.setItems(calItems);
+
+
 
         Button addMeal = new Button("Add Food");
         addMeal.setOnAction(new EventHandler<ActionEvent>() {
@@ -44,18 +54,34 @@ public class dietGraphics extends BorderPane {
                 calCount.setMaxSize(200,20);
                 calCount.setEditable(true);
 
-                VBox caloric = new VBox(spinnerLabel, calCount);
+                HBox caloric = new HBox(spinnerLabel, calCount);
+                caloric.setSpacing(20);
 
                 Label foodLabel = new Label("Food Name:");
                 TextField foodName = new TextField();
                 foodName.setMaxSize(200,20);
-                VBox namey = new VBox(foodLabel, foodName);
+                HBox namey = new HBox(foodLabel, foodName);
+                namey.setSpacing(20);
 
-                VBox enterFood = new VBox(namey, caloric);
+
+                Button enter = new Button("Enter");
+                enter.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        name = foodName.getText();
+                        calTake = calCount.getValue();
+                        items.add(name);
+                        allNames.add(name);
+                        calItems.add(calTake);
+                        cals.add(calTake);
+
+                        addFood.close();
+                    }
+                });
+
+                VBox enterFood = new VBox(namey, caloric, enter);
                 enterFood.setAlignment(Pos.TOP_CENTER);
                 enterFood.setSpacing(50);
-
-
 
                 Scene addFoodScene = new Scene(enterFood, 400, 400);
                 addFood.setScene(addFoodScene);
@@ -63,10 +89,34 @@ public class dietGraphics extends BorderPane {
             }
         });
 
-      this.setTop(home);
-      this.setCenter(addMeal);
+        Button home = new Button("Home");
+        home.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println(allNames);
+
+                Stage s = (Stage) dietGraphics.this.getScene().getWindow();
+                homeGraphics homeGraphic = new homeGraphics(s);
+                Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
+                s.setScene(homeScene);
+                s.setTitle("Home");
+            }
+        });
+
+        HBox lists = new HBox(names, calCounts);
+        HBox actions = new HBox(home, addMeal);
+      this.setTop(actions);
+      this.setCenter(lists);
     }
 
+
+    public String[] getNames(){
+        return (String[]) allNames.toArray();
+    }
+
+public Integer[] getCals(){
+        return (Integer[]) cals.toArray();
+}
 
 
 
