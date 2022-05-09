@@ -15,12 +15,15 @@ import javafx.stage.Stage;
 public class GoalSettings extends BorderPane {
 
     private int goalNumber;
-    private String GML;
+    private String GML = "maintain";
 
     public GoalSettings(Stage stage, settingsLogic logic) {
+
+        //set up title
         Text title = new Text("Set A Goal");
         title.setFont(new Font(30));
 
+        //set up gain/maintain/lose buttons
         ToggleGroup chooseGoal = new ToggleGroup();
         ToggleButton gain = new ToggleButton("Gain");
         gain.setToggleGroup(chooseGoal);
@@ -29,27 +32,21 @@ public class GoalSettings extends BorderPane {
         ToggleButton maintain = new ToggleButton("Maintain");
         maintain.setToggleGroup(chooseGoal);
         maintain.setSelected(true);
-
         HBox g = new HBox(5, gain, maintain, lose);
         g.setAlignment(Pos.CENTER);
 
+        //set up gain/maintain/lose box
         Text goalText1 = new Text("I want to...");
         Text goalText2 = new Text("weight");
-
         VBox goal = new VBox(10, goalText1, g, goalText2);
         goal.setAlignment(Pos.CENTER);
 
-
-
-
+        //set up spinner + spinner vbox
         VBox chooseCalorieGoal = new VBox(10);
         chooseCalorieGoal.setAlignment(Pos.CENTER);
         Spinner calorieGoalSpinner = new Spinner(0, 500, 250, 25);
         calorieGoalSpinner.setPrefWidth(stage.getWidth()/5);
         calorieGoalSpinner.setEditable(true);
-
-
-
 
         chooseGoal.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> changed,
@@ -79,10 +76,6 @@ public class GoalSettings extends BorderPane {
             }
         });
 
-
-        Text goalNumberText = new Text("" + goalNumber);
-
-
         calorieGoalSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
             @Override
             public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
@@ -106,6 +99,13 @@ public class GoalSettings extends BorderPane {
                 if (lose.isSelected()) {
                     logic.setGoal(goalNumber * -1);
                 }
+
+
+                GoalSettings GoalSettings = new GoalSettings(stage, logic, GML);
+                Scene GoalScene = new Scene(GoalSettings, stage.getWidth(), stage.getHeight());
+                stage.setScene(GoalScene);
+                stage.setTitle("Goal has been set!");
+
             }
         });
 
@@ -133,9 +133,36 @@ public class GoalSettings extends BorderPane {
                 Scene settingsScene = new Scene(setting, s.getWidth(), s.getHeight());
                 s.setScene(settingsScene);
                 s.setTitle("Settings");
-
             }
         });
+    }
+
+    private GoalSettings(Stage stage, settingsLogic logic, String GML){
+        
+        Text title = new Text("All Set!");
+        title.setFont(new Font(30));
+
+        Text a = new Text("Your goal has been set to " + GML + " weight");
+
+        Text b = new Text();
+
+        int g;
+        g = logic.getGoal();
+        b.setText("You will gain " + logic.getGoal() + " calories a day.");
+
+        if (logic.getGoal() < 0) {
+            g *= -1;
+            b.setText("You will cut " + logic.getGoal() + " calories a day.");
+        }
+
+
+
+
+
+        VBox screenBox = new VBox(spacerMaker(), title, spacerMaker(), a, b, spacerMaker(), spacerMaker());
+        setCenter(screenBox);
+        screenBox.setAlignment(Pos.CENTER);
+
     }
 
     private boolean setGML(String s){

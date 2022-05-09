@@ -1,7 +1,5 @@
 package org.headroyce.srd.calorietracker;
 
-import javafx.scene.Parent;
-
 //TODO: figure out defaults, kcal vs kilojoules, add units in labels, figure out how to fluidly wrap text,
 // add back buttons, maybe do a scrollPane? who knows
 
@@ -211,6 +209,10 @@ public class settingsLogic {
         }
         System.out.println(this.RMR);
 
+    }
+
+    public int getGoal() {
+        return this.netGoal;
     }
 
 

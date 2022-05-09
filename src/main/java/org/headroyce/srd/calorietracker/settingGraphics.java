@@ -109,7 +109,6 @@ public class settingGraphics extends BorderPane {
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");
-
             }
         });
 
