@@ -6,8 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 public class Main extends Application {
+
+    PrintWriter outputStream;
     @Override
     public void start(Stage stage) throws IOException {
         homeGraphics home = new homeGraphics(stage);
@@ -15,6 +19,7 @@ public class Main extends Application {
         stage.setTitle("Home Page");
         stage.setScene(scene);
         stage.show();
+
     }
 
     public static void main(String[] args) {launch();}
