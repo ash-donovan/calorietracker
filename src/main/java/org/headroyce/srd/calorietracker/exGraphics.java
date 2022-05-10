@@ -15,6 +15,8 @@ public class exGraphics extends BorderPane {
 
     public exGraphics(settingsLogic settingsLogic) {
 
+
+
         Text title = new Text("Exercise");
         title.setFont(new Font(30));
 
@@ -61,6 +63,17 @@ public class exGraphics extends BorderPane {
                 Scene inputPage = new Scene(exInput, s.getWidth(), s.getHeight());
                 s.setScene(inputPage);
                 s.setTitle("Exercise Input");
+            }
+        });
+
+        log.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage s = (Stage) exGraphics.this.getScene().getWindow();
+                exLog exLog = new exLog();
+                Scene logPage = new Scene(exLog, s.getWidth(), s.getHeight());
+                s.setScene(logPage);
+                s.setTitle("Exercise Log");
             }
         });
 
