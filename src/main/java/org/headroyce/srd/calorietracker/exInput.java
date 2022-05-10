@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class exInput extends BorderPane {
 
 
-    private int metPass = 5;
+    private double metPass = 5;
     private Stage s;
 
     public exInput(Stage stage){
@@ -36,7 +36,7 @@ public class exInput extends BorderPane {
         TextField time = new TextField();
 
         exerciseName.setPromptText("Name of Exercise");
-        time.setPromptText("Time spent");
+        time.setPromptText("Time spent in minutes");
 
         HBox textFields = new HBox(exerciseName, time);
         textFields.setAlignment(Pos.CENTER);
@@ -46,7 +46,7 @@ public class exInput extends BorderPane {
         metTitle.setFont(new Font(20));
 
         Text metDes = new Text("Your MET is the objective measure of the ratio of the rate at which a person expends energy, " +
-                "ralative to the mass of that person (Wikipedia).");
+                "ralative to the mass of that person (Wikipedia). In other words, a 1 would be sittin down not doing anything and a 10 would sprinting as hard as you can for 5 miles.");
         metDes.setTextAlignment(TextAlignment.CENTER);
         metDes.setWrappingWidth(stage.getWidth()/2);
         metDes.setFont(new Font(13));
@@ -63,12 +63,32 @@ public class exInput extends BorderPane {
         met.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                metVal.setText("Your activity MET: " + newValue.intValue());
-                metPass = newValue.intValue();
+
+                metPass = newValue.doubleValue();
+                metPass *= 10;
+                metPass = (int) metPass;
+                metPass /= 10.0;
+                metVal.setText("Your activity MET: " + metPass);
             }
         });
 
-        VBox yur = new VBox(title, textFields, metDes, met, metVal);
+
+        Button calsBurned = new Button("Calculate Calories Burned");
+
+        calsBurned.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+              double realCalsBurned = (3.5 * metPass * 60) / 200;
+                Text displayBurnedCals = new Text("You burned " + realCalsBurned + "calories.");
+                displayBurnedCals.setFont(new Font(13));
+
+                VBox burnedBox = new VBox(displayBurnedCals);
+                burnedBox.setAlignment(Pos.CENTER);
+            }
+        });
+
+
+        VBox yur = new VBox(title, textFields, metDes, met, metVal, calsBurned);
         yur.setAlignment(Pos.TOP_CENTER);
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
