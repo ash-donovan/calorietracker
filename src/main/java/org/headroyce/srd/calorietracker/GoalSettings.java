@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -20,7 +19,7 @@ public class GoalSettings extends BorderPane {
     private int goalNumber;
     private String GML = "maintain";
 
-    public GoalSettings(Stage stage, settingsLogic logic) {
+    public GoalSettings(Stage stage, settingsLogic settingsLogic) {
 
         //set up title
         Text title = new Text("Set A Goal");
@@ -65,6 +64,7 @@ public class GoalSettings extends BorderPane {
 
                 if (maintain.isSelected()) {
                     chooseCalorieGoal.getChildren().clear();
+
                     setGML("maintain");
                 }
 
@@ -95,24 +95,22 @@ public class GoalSettings extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (maintain.isSelected()) {
-                    logic.setGoal(0);
+                    settingsLogic.setGoal(0);
                 }
                 if (gain.isSelected()) {
-                    logic.setGoal(goalNumber);
+                    settingsLogic.setGoal(goalNumber);
                 }
                 if (lose.isSelected()) {
-                    logic.setGoal(goalNumber * -1);
+                    settingsLogic.setGoal(goalNumber * -1);
                 }
 
-                GoalSettings GoalSettings = new GoalSettings(stage, logic, GML);
+                GoalSettings GoalSettings = new GoalSettings(stage, settingsLogic, GML);
                 Scene GoalScene = new Scene(GoalSettings, stage.getWidth(), stage.getHeight());
                 stage.setScene(GoalScene);
                 stage.setTitle("Goal has been set!");
 
             }
         });
-
-
 
 
         VBox screenBox = new VBox(2, spacerMaker(), spacerMaker(), title, spacerMaker(), goal, spacerMaker(),
@@ -132,7 +130,7 @@ public class GoalSettings extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) GoalSettings.this.getScene().getWindow();
-                settingGraphics setting = new settingGraphics(s);
+                settingGraphics setting = new settingGraphics(s, settingsLogic);
                 Scene settingsScene = new Scene(setting, s.getWidth(), s.getHeight());
                 s.setScene(settingsScene);
                 s.setTitle("Settings");
@@ -140,7 +138,7 @@ public class GoalSettings extends BorderPane {
         });
     }
 
-    private GoalSettings(Stage stage, settingsLogic logic, String GML){
+    private GoalSettings(Stage stage, settingsLogic settingsLogic, String GML){
         
         Text title = new Text("All Set!");
         title.setFont(new Font(30));
@@ -150,13 +148,13 @@ public class GoalSettings extends BorderPane {
         Text b = new Text();
         Text c = new Text();
 
-        a.setText("Your goal has been set to " + GML + " weight. You will gain " + logic.getGoal() + " calories a day.");
+        a.setText("Your goal has been set to " + GML + " weight. You will gain " + settingsLogic.getGoal() + " calories a day.");
 
-        if (logic.getGoal() < 0) {
+        if (settingsLogic.getGoal() < 0) {
 
-            a.setText("Your goal has been set to " + GML + " weight. You will cut " + logic.getGoal()*-1 + " calories a day.");
+            a.setText("Your goal has been set to " + GML + " weight. You will cut " + settingsLogic.getGoal()*-1 + " calories a day.");
         }
-        if (logic.getGoal() == 0) {
+        if (settingsLogic.getGoal() == 0) {
             a.setText("Your goal has been set to " + GML + " weight.");
         }
         a.setWrappingWidth(stage.getWidth()/2);
@@ -168,7 +166,7 @@ public class GoalSettings extends BorderPane {
         Button action = new Button("OK");
 
 
-        if (!logic.isRmrSet()) {
+        if (!settingsLogic.isRmrSet()) {
             c.setText("You haven't calculated your RMR yet! Calculate your RMR to find out how many calories you need to eat in a day");
             c.setWrappingWidth(stage.getWidth()/2);
             c.setFill(Color.INDIANRED);
@@ -184,15 +182,15 @@ public class GoalSettings extends BorderPane {
         action.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (logic.isRmrSet()) {
-                    homeGraphics home = new homeGraphics(stage);
+                if (settingsLogic.isRmrSet()) {
+                    homeGraphics home = new homeGraphics(stage, new settingsLogic());
                     Scene homeScene = new Scene(home, stage.getWidth(), stage.getHeight());
                     stage.setScene(homeScene);
                     stage.setTitle("Home");
                 }
 
                 else {
-                    RmrCalculator calc = new RmrCalculator(stage, logic);
+                    RmrCalculator calc = new RmrCalculator(stage, settingsLogic);
                     Scene calcScene = new Scene(calc, stage.getWidth(), stage.getHeight());
                     stage.setScene(calcScene);
                     stage.setTitle("RMR Calculator");

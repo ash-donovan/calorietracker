@@ -20,7 +20,7 @@ public class exInput extends BorderPane {
 
     private Stage s;
 
-    public exInput(Stage stage){
+    public exInput(Stage stage, settingsLogic settingsLogic){
 
         Text title = new Text("Input your exercise");
         title.setFont(new Font(30));
@@ -70,7 +70,7 @@ public class exInput extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exInput.this.getScene().getWindow();
-                exGraphics exGraphic = new exGraphics();
+                exGraphics exGraphic = new exGraphics(settingsLogic);
                 Scene exPage = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exPage);
                 s.setTitle("exGraphics");

@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class dayGraphics extends BorderPane {
@@ -18,7 +17,7 @@ public class dayGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) dayGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
+                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");
