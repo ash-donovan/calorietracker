@@ -8,8 +8,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class GoalSettings extends BorderPane {
@@ -47,6 +50,7 @@ public class GoalSettings extends BorderPane {
         Spinner calorieGoalSpinner = new Spinner(0, 500, 250, 25);
         calorieGoalSpinner.setPrefWidth(stage.getWidth()/5);
         calorieGoalSpinner.setEditable(true);
+        goalNumber = (int) calorieGoalSpinner.getValueFactory().getValue();
 
         chooseGoal.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> changed,
@@ -100,7 +104,6 @@ public class GoalSettings extends BorderPane {
                     logic.setGoal(goalNumber * -1);
                 }
 
-
                 GoalSettings GoalSettings = new GoalSettings(stage, logic, GML);
                 Scene GoalScene = new Scene(GoalSettings, stage.getWidth(), stage.getHeight());
                 stage.setScene(GoalScene);
@@ -142,24 +145,64 @@ public class GoalSettings extends BorderPane {
         Text title = new Text("All Set!");
         title.setFont(new Font(30));
 
-        Text a = new Text("Your goal has been set to " + GML + " weight");
+        Text a = new Text();
 
         Text b = new Text();
+        Text c = new Text();
 
-        int g;
-        g = logic.getGoal();
-        b.setText("You will gain " + logic.getGoal() + " calories a day.");
+        a.setText("Your goal has been set to " + GML + " weight. You will gain " + logic.getGoal() + " calories a day.");
 
         if (logic.getGoal() < 0) {
-            g *= -1;
-            b.setText("You will cut " + logic.getGoal() + " calories a day.");
+
+            a.setText("Your goal has been set to " + GML + " weight. You will cut " + logic.getGoal()*-1 + " calories a day.");
+        }
+        if (logic.getGoal() == 0) {
+            a.setText("Your goal has been set to " + GML + " weight.");
+        }
+        a.setWrappingWidth(stage.getWidth()/2);
+        a.setTextAlignment(TextAlignment.CENTER);
+
+        VBox body = new VBox(5, a, b);
+        body.setAlignment(Pos.CENTER);
+
+        Button action = new Button("OK");
+
+
+        if (!logic.isRmrSet()) {
+            c.setText("You haven't calculated your RMR yet! Calculate your RMR to find out how many calories you need to eat in a day");
+            c.setWrappingWidth(stage.getWidth()/2);
+            c.setFill(Color.INDIANRED);
+            c.setTextAlignment(TextAlignment.CENTER);
+            c.setLineSpacing(5);
+            action = new Button("Calculate RMR");
+            body.getChildren().addAll(spacerMaker(), c, action);
+        }
+        else {
+            body.getChildren().add(action);
         }
 
+        action.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (logic.isRmrSet()) {
+                    homeGraphics home = new homeGraphics(stage);
+                    Scene homeScene = new Scene(home, stage.getWidth(), stage.getHeight());
+                    stage.setScene(homeScene);
+                    stage.setTitle("Home");
+                }
+
+                else {
+                    RmrCalculator calc = new RmrCalculator(stage, logic);
+                    Scene calcScene = new Scene(calc, stage.getWidth(), stage.getHeight());
+                    stage.setScene(calcScene);
+                    stage.setTitle("RMR Calculator");
+                }
+            }
+        });
 
 
 
-
-        VBox screenBox = new VBox(spacerMaker(), title, spacerMaker(), a, b, spacerMaker(), spacerMaker());
+    VBox screenBox = new VBox(spacerMaker(), title, spacerMaker(), body, spacerMaker(), spacerMaker());
         setCenter(screenBox);
         screenBox.setAlignment(Pos.CENTER);
 
