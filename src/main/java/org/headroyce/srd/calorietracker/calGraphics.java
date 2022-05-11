@@ -10,6 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class calGraphics extends BorderPane {
     private Button[][] days;
     int counter;
@@ -65,15 +67,21 @@ public class calGraphics extends BorderPane {
                     counter = 1;
                 }
                 button.setText("" + counter);
+                int dayRight = counter;
 
                 button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         Stage s = (Stage) calGraphics.this.getScene().getWindow();
-                        dayGraphics dayGraphic = new dayGraphics(month, counter);
+                        dayGraphics dayGraphic = null;
+                        try {
+                            dayGraphic = new dayGraphics(month, dayRight);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         Scene dayScene = new Scene(dayGraphic, s.getWidth(), s.getHeight());
                         s.setScene(dayScene);
-                        s.setTitle("" + month + "/" + counter);
+                        s.setTitle("" + month + "/" + dayRight);
 
                     }
                 });

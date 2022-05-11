@@ -18,18 +18,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class dietGraphics extends BorderPane {
 
-    String name;
-    int calTake;
-    ArrayList<Integer> cals;
-    ArrayList<String> allNames;
+   private String name;
+    private int calTake;
+
+
 
     public dietGraphics() {
 
-        cals = new ArrayList<>();
-        allNames = new ArrayList<>();
+        Date datey = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datey);
+
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+        int monthNow = calendar.get(Calendar.MONTH) + 1;
+
+
        ListView<String> names = new ListView<String>();
        ObservableList<String> items = FXCollections.observableArrayList();
         names.setItems(items);
@@ -73,12 +81,13 @@ public class dietGraphics extends BorderPane {
                     public void handle(ActionEvent actionEvent) {
                         name = foodName.getText();
                         calTake = calCount.getValue();
-
+                        items.add(name);
+                        calItems.add(calTake);
                         addFood.close();
 
                         try {
                             PrintWriter out = new PrintWriter("dataStore");
-                            out.println(name + "," + calTake);
+                            out.println(monthNow + "," + dayNow + "," + name + "," + calTake);
 
                             out.close();
                         } catch (FileNotFoundException e) {
@@ -102,7 +111,6 @@ public class dietGraphics extends BorderPane {
         home.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(allNames);
 
                 Stage s = (Stage) dietGraphics.this.getScene().getWindow();
                 homeGraphics homeGraphic = new homeGraphics(s);
@@ -117,15 +125,6 @@ public class dietGraphics extends BorderPane {
       this.setTop(actions);
       this.setCenter(lists);
     }
-
-
-    public String[] getNames(){
-        return (String[]) allNames.toArray();
-    }
-
-public Integer[] getCals(){
-        return (Integer[]) cals.toArray();
-}
 
 
 

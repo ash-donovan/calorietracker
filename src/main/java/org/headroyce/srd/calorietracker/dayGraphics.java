@@ -8,26 +8,46 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class dayGraphics extends BorderPane {
 
 
-    public dayGraphics(int month, int day) {
+    public dayGraphics(int month, int day) throws FileNotFoundException {
 
-        Button home = new Button("Home");
-        home.setOnAction(new EventHandler<ActionEvent>() {
+        Button back = new Button("Back");
+        back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) dayGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
-                Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
-                s.setScene(homeScene);
-                s.setTitle("Home");
+                calGraphics calgraphic = new calGraphics();
+                Scene calScene = new Scene(calgraphic, s.getWidth(), s.getHeight());
+                s.setScene(calScene);
+                s.setTitle("Calendar");
             }
         });
+        Scanner readScan = new Scanner(new File("dataStore"));
+        String foodAte = readScan.nextLine();
+
+        String[] parts = foodAte.split(",");
+        int parsedMonth = Integer.parseInt(parts[0]);
+        int parsedDay = Integer.parseInt(parts[1]);
+
+
+
+        if(parsedMonth == month){
+            if(parsedDay == day) {
+                Text display = new Text(foodAte);
+                this.setCenter(display);
+            }
+        }
 
 
 
 
-        this.setTop(home);
+
+        this.setTop(back);
     }
 }
