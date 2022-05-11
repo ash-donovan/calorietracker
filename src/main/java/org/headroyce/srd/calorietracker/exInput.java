@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -84,17 +85,84 @@ public class exInput extends BorderPane {
         calsBurned.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                double mins = Double.parseDouble(time.getText());
-                double realCalsBurned = mins * (3.5 * metPass * settingsLogic.getWeight()) / 200;
-                Text displayBurnedCals = new Text("You burned " + realCalsBurned + "calories.");
-                displayBurnedCals.setFont(new Font(13));
+
+
+                String t = time.getText();
+
+                if (isInputOk(t)) {
+
+                    StringBuilder str = new StringBuilder(t);
+                    for (int i = 0; i < t.length(); i++) {
+                        if (t.charAt(i) == ' ') {
+                            str.deleteCharAt(i);
+                        }
+                    }
+                    String ns = str.toString();
+
+                    double mins = Double.parseDouble(ns);
+
+                    double calculated = mins * (3.5 * metPass * settingsLogic.getWeight()) / 200;
+                    int realCalsBurned = (int) (calculated + .5);
+                    Text displayBurnedCals = new Text("You burned " + realCalsBurned + " calories.");
+                    displayBurnedCals.setFont(new Font(13));
+                    yur.getChildren().add(displayBurnedCals);
+                    VBox burnedBox = new VBox(displayBurnedCals);
+                    burnedBox.setAlignment(Pos.CENTER);
+                    yur.getChildren().clear();
+                    yur.getChildren().addAll(title, textFields, metDes, met,
+                    metVal, calsBurned, burnedBox);
+
+                }
+
+                else {
+
+                    StringBuilder str = new StringBuilder(t);
+                    for (int i = 0; i < t.length(); i++) {
+                        if (t.charAt(i) == ' ') {
+                            str.deleteCharAt(i);
+                        }
+                    }
+                    String numMins = str.toString();
+
+
+                    Text minWarning = new Text();
+                    minWarning.setFont(new Font(10));
+                    minWarning.setFill(Color.RED);
+                    minWarning.setTextAlignment(TextAlignment.CENTER);
+
+                    VBox warningBox = new VBox(minWarning);
+
+
+                    if (numMins == "") {
+                        minWarning.setText("Please input an amount of time spent exercising.");
+                    }
+
+                    else {
+                        minWarning.setText("Please input a legal amount of time spent exercising.");
+                    }
+
+
+                    if (exerciseName.getText() == "") {
+                        System.out.println("exercise name is null");
+                        Text nameWarning = new Text("Please input an exercise name.");
+                        nameWarning.setFont(new Font(10));
+                        nameWarning.setFill(Color.RED);
+                        nameWarning.setTextAlignment(TextAlignment.CENTER);
+                        warningBox = new VBox(5, minWarning, nameWarning);
+                    }
+
+                    warningBox.setAlignment(Pos.CENTER);
+                    yur.getChildren().clear();
+                    yur.getChildren().addAll(title, textFields, metDes, met,
+                            metVal, calsBurned, warningBox);
 
 
 
-                yur.getChildren().add(displayBurnedCals);
+                }
 
-                VBox burnedBox = new VBox(displayBurnedCals);
-                burnedBox.setAlignment(Pos.CENTER);
+
+
+
             }
         });
 
@@ -105,8 +173,6 @@ public class exInput extends BorderPane {
 
         HBox wholePage = new HBox(backButton, yur);
         this.setTop(wholePage);
-
-
 
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -119,6 +185,38 @@ public class exInput extends BorderPane {
 
             }
         });
+
+    }
+
+    private boolean isInputOk(String s) {
+        if (s == null || s == "") {
+            return false;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            if (!(s.charAt(i) == '0' || s.charAt(i) == '1' || s.charAt(i) == '2' || s.charAt(i) == '3' || s.charAt(i) == '4'
+                    || s.charAt(i) == '5' || s.charAt(i) == '6'|| s.charAt(i) == '7'
+                    || s.charAt(i) == '8' || s.charAt(i) == '9' || s.charAt(i) == '.' || s.charAt(i) == ' ')) {
+                return false;
+            }
+        }
+
+        StringBuilder str = new StringBuilder(s);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                str.deleteCharAt(i);
+            }
+
+            String ns = str.toString();
+
+            double a = Double.parseDouble(ns);
+
+            if (a < 1) {
+                return false;
+            }
+        }
+
+        return true;
 
     }
 
