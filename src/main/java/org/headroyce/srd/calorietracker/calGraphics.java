@@ -18,7 +18,7 @@ public class calGraphics extends BorderPane {
     Text monthText;
 
 
-    public calGraphics() {
+    public calGraphics(settingsLogic settingsLogic) {
         calLogic calLogic = new calLogic();
         month = 1;
         day = 1;
@@ -155,7 +155,7 @@ public class calGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) calGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
+                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");

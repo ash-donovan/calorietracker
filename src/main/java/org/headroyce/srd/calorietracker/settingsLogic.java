@@ -1,12 +1,6 @@
 package org.headroyce.srd.calorietracker;
 
-//TODO: figure out defaults, kcal vs kilojoules, add units in labels, figure out how to fluidly wrap text,
-// add back buttons, maybe do a scrollPane? who knows
-
-
 public class settingsLogic {
-
-
 
     private int dailyCals;
     private boolean goalSet;
@@ -19,7 +13,7 @@ public class settingsLogic {
     private double weight;
     private double height;
     private double age;
-    //female = true, male = false
+//    female = true, male = false
     private boolean sex;
 
 
