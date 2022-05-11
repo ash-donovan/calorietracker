@@ -11,11 +11,16 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class RmrCalculator extends BorderPane {
 
-    public RmrCalculator(Stage stage, settingsLogic logic) {
+    private settingsLogic settingsLogic;
+
+    public RmrCalculator(Stage stage, settingsLogic settingsLogic) {
+
+        this.settingsLogic = settingsLogic;
 
         //set up header
         Text title = new Text("RMR Calculator");
@@ -88,25 +93,30 @@ public class RmrCalculator extends BorderPane {
             @Override
             public void handle(ActionEvent e) {
 
-                logic.setImperial(imperial.isSelected());
+                settingsLogic.setImperial(imperial.isSelected());
 
                 warnings.getChildren().clear();
 
-                if (!logic.setWeight(weight.getText())) {
+                boolean a = settingsLogic.setWeight(weight.getText());
+                boolean b = settingsLogic.setHeight(height.getText());
+                boolean c = settingsLogic.setAge(age.getText());
+                boolean d = female.isSelected() || male.isSelected();
+
+                if (!settingsLogic.setWeight(weight.getText())) {
                     Text weightWarning = new Text("Please input a legal weight.");
                     weightWarning.setFont(new Font(10));
                     weightWarning.setFill(Color.RED);
                     warnings.getChildren().add(weightWarning);
                 }
 
-                if (!logic.setHeight(height.getText())) {
+                if (!settingsLogic.setHeight(height.getText())) {
                     Text heightWarning = new Text("Please input a legal height.");
                     heightWarning.setFont(new Font(10));
                     heightWarning.setFill(Color.RED);
                     warnings.getChildren().add(heightWarning);
                 }
 
-                if (!logic.setAge(age.getText())) {
+                if (!settingsLogic.setAge(age.getText())) {
                     Text ageWarning = new Text("Please input a legal age.");
                     ageWarning.setFont(new Font(10));
                     ageWarning.setFill(Color.RED);
@@ -119,11 +129,20 @@ public class RmrCalculator extends BorderPane {
                     sexWarning.setFill(Color.RED);
                     warnings.getChildren().add(sexWarning);
                 } else {
-                    logic.setSex(female.isSelected());
+                    settingsLogic.setSex(female.isSelected());
 
                 }
 
-                logic.calculateRMR();
+                settingsLogic.calculateRMR();
+
+                if (a && b && c && d) {
+                    Stage s = (Stage) RmrCalculator.this.getScene().getWindow();
+                    RmrCalculator done = new RmrCalculator(s, settingsLogic, "done");
+                    Scene doneScene = new Scene(done, s.getWidth(), s.getHeight());
+                    s.setScene(doneScene);
+                    s.setTitle("Settings");
+                }
+
             }
         });
 
@@ -134,7 +153,7 @@ public class RmrCalculator extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) RmrCalculator.this.getScene().getWindow();
-                settingGraphics setting = new settingGraphics(s);
+                settingGraphics setting = new settingGraphics(s, settingsLogic);
                 Scene settingsScene = new Scene(setting, s.getWidth(), s.getHeight());
                 s.setScene(settingsScene);
                 s.setTitle("Settings");
@@ -142,14 +161,66 @@ public class RmrCalculator extends BorderPane {
         });
     }
 
-    private RmrCalculator(Stage stage, settingsLogic logic, String s) {
+    private RmrCalculator(Stage stage, settingsLogic settingsLogic, String s) {
+
+        Text title = new Text("All Set!");
+        title.setFont(new Font(30));
+
+        Text a = new Text();
+
+        a.setText("Your RMR has been set to " + settingsLogic.getRMR() + " calories a day.");
+        a.setWrappingWidth(stage.getWidth()/2);
+        a.setTextAlignment(TextAlignment.CENTER);
+
+        VBox body = new VBox(5, a, spacerMaker());
+        body.setAlignment(Pos.CENTER);
+
+        Button action = new Button("OK");
+
+
+        if (!settingsLogic.isGoalSet()) {
+            Text c = new Text("It looks like you haven't set your goal yet! You can do that here:");
+            c.setWrappingWidth(stage.getWidth()/2);
+            c.setFill(Color.INDIANRED);
+            c.setTextAlignment(TextAlignment.CENTER);
+            c.setLineSpacing(5);
+            action.setText("Set Goal");
+            body.getChildren().addAll(c, spacerMaker());
+        }
+
+        body.getChildren().add(action);
+
+        action.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (settingsLogic.isGoalSet()) {
+                    homeGraphics home = new homeGraphics(stage, new settingsLogic());
+                    Scene homeScene = new Scene(home, stage.getWidth(), stage.getHeight());
+                    stage.setScene(homeScene);
+                    stage.setTitle("Home");
+                }
+
+                else {
+                    GoalSettings goalSettings = new GoalSettings(stage, settingsLogic);
+                    Scene goalSettingsScene = new Scene(goalSettings, stage.getWidth(), stage.getHeight());
+                    stage.setScene(goalSettingsScene);
+                    stage.setTitle("Set a goal");
+                }
+            }
+        });
+
+
+
+        VBox screenBox = new VBox(spacerMaker(), title, spacerMaker(), body, spacerMaker(), spacerMaker());
+        setCenter(screenBox);
+        screenBox.setAlignment(Pos.CENTER);
 
     }
 
 
 
         /**
-         * generates blank regions
+         * generates spacers
          * @return a blank region with a Vgrow of ALWAYS
          */
     private Region spacerMaker() {

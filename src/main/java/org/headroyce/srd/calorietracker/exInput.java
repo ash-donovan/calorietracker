@@ -1,5 +1,7 @@
 package org.headroyce.srd.calorietracker;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,9 +20,14 @@ import javafx.stage.Stage;
 
 public class exInput extends BorderPane {
 
+
+    private double metPass = 5;
     private Stage s;
 
-    public exInput(Stage stage){
+    public exInput(Stage stage, settingsLogic settingsLogic){
+
+        s = stage;
+
 
         Text title = new Text("Input your exercise");
         title.setFont(new Font(30));
@@ -29,7 +36,7 @@ public class exInput extends BorderPane {
         TextField time = new TextField();
 
         exerciseName.setPromptText("Name of Exercise");
-        time.setPromptText("Time spent");
+        time.setPromptText("Time spent in minutes");
 
         HBox textFields = new HBox(exerciseName, time);
         textFields.setAlignment(Pos.CENTER);
@@ -39,7 +46,7 @@ public class exInput extends BorderPane {
         metTitle.setFont(new Font(20));
 
         Text metDes = new Text("Your MET is the objective measure of the ratio of the rate at which a person expends energy, " +
-                "ralative to the mass of that person (Wikipedia).");
+                "ralative to the mass of that person (Wikipedia). In other words, a 1 would be sittin down not doing anything and a 10 would sprinting as hard as you can for 5 miles.");
         metDes.setTextAlignment(TextAlignment.CENTER);
         metDes.setWrappingWidth(stage.getWidth()/2);
         metDes.setFont(new Font(13));
@@ -50,11 +57,46 @@ public class exInput extends BorderPane {
         met.setMajorTickUnit(2);
         met.setBlockIncrement(1);
 
-        VBox yur = new VBox(title, textFields, metDes, met);
+        Text metVal = new Text("Your activity MET: " + met.getValue());
+        metVal.setFont(new Font(13));
+
+        met.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+
+                metPass = newValue.doubleValue();
+                metPass *= 10;
+                metPass = (int) metPass;
+                metPass /= 10.0;
+                metVal.setText("Your activity MET: " + metPass);
+            }
+        });
+
+
+        Button calsBurned = new Button("Calculate Calories Burned");
+
+        VBox yur = new VBox(title, textFields, metDes, met, metVal, calsBurned);
         yur.setAlignment(Pos.TOP_CENTER);
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
         this.setTop(yur);
+
+        calsBurned.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                double mins = Double.parseDouble(time.getText());
+                double realCalsBurned = mins * (3.5 * metPass * settingsLogic.getWeight()) / 200;
+                Text displayBurnedCals = new Text("You burned " + realCalsBurned + "calories.");
+                displayBurnedCals.setFont(new Font(13));
+
+
+
+                yur.getChildren().add(displayBurnedCals);
+
+                VBox burnedBox = new VBox(displayBurnedCals);
+                burnedBox.setAlignment(Pos.CENTER);
+            }
+        });
 
         Button back = new Button("Back");
 
@@ -70,7 +112,7 @@ public class exInput extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exInput.this.getScene().getWindow();
-                exGraphics exGraphic = new exGraphics();
+                exGraphics exGraphic = new exGraphics(settingsLogic);
                 Scene exPage = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exPage);
                 s.setTitle("exGraphics");

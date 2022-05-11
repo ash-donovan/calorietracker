@@ -5,8 +5,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,13 +13,13 @@ import javafx.stage.Stage;
 
 public class settingGraphics extends BorderPane {
 
-    private settingsLogic logic;
 
+    public settingsLogic settingsLogic;
 
+    public settingGraphics(Stage stage, settingsLogic settingsLogic){
 
-    public settingGraphics(Stage stage){
+        this.settingsLogic = settingsLogic;
 
-        logic = new settingsLogic();
 
         Text title = new Text("Settings");
         title.setFont(new Font(30));
@@ -78,7 +76,7 @@ public class settingGraphics extends BorderPane {
 
         rmrButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                RmrCalculator rmrCalc = new RmrCalculator(stage, logic);
+                RmrCalculator rmrCalc = new RmrCalculator(stage, settingsLogic);
                 Scene rmrScene = new Scene(rmrCalc, stage.getWidth(), stage.getHeight());
                 stage.setScene(rmrScene);
                 stage.show();
@@ -89,7 +87,7 @@ public class settingGraphics extends BorderPane {
 
         goalButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                GoalSettings goalStuff = new GoalSettings(stage, logic);
+                GoalSettings goalStuff = new GoalSettings(stage, settingsLogic);
                 Scene goalScene = new Scene(goalStuff, stage.getWidth(), stage.getHeight());
                 stage.setScene(goalScene);
                 stage.show();
@@ -105,7 +103,7 @@ public class settingGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) settingGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
+                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");
@@ -115,7 +113,7 @@ public class settingGraphics extends BorderPane {
     }
 
     public settingsLogic getSettingsLogic() {
-        return this.logic;
+        return this.settingsLogic;
     }
 
 }

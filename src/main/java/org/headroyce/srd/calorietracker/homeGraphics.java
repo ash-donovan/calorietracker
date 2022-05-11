@@ -13,12 +13,13 @@ public class homeGraphics extends BorderPane {
 
     private Stage s;
     settingGraphics setting;
+    settingsLogic settingsLogic = new settingsLogic();
 
 
-    public homeGraphics(Stage stage) {
+    public homeGraphics(Stage stage, settingsLogic settingsLogic) {
 
         s = stage;
-        setting = new settingGraphics(s);
+        setting = new settingGraphics(s, this.settingsLogic);
 
         //buttons to change tabs
         Button exercise = new Button("Exercise");
@@ -46,7 +47,7 @@ public class homeGraphics extends BorderPane {
         exercise.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                exGraphics exGraphic = new exGraphics();
+                exGraphics exGraphic = new exGraphics(homeGraphics.this.settingsLogic);
 
                 Scene exScene = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
@@ -58,7 +59,7 @@ public class homeGraphics extends BorderPane {
         diet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                dietGraphics dietGraphic = new dietGraphics();
+                dietGraphics dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
 
                 Scene dietScene = new Scene(dietGraphic, s.getWidth(), s.getHeight());
                 s.setScene(dietScene);
@@ -69,7 +70,7 @@ public class homeGraphics extends BorderPane {
         calendar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                calGraphics calGraphic = new calGraphics();
+                calGraphics calGraphic = new calGraphics(homeGraphics.this.settingsLogic);
 
                 Scene calScene = new Scene(calGraphic, s.getWidth(), s.getHeight());
                 s.setScene(calScene);

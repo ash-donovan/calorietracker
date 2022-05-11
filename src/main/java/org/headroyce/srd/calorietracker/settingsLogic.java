@@ -1,15 +1,11 @@
 package org.headroyce.srd.calorietracker;
 
-//TODO: figure out defaults, kcal vs kilojoules, add units in labels, figure out how to fluidly wrap text,
-// add back buttons, maybe do a scrollPane? who knows
-
-
 public class settingsLogic {
 
-
-
     private int dailyCals;
+    private boolean goalSet;
     private int netGoal;
+    private boolean rmrSet;
     private int RMR;
 
     private boolean imperial;
@@ -17,12 +13,15 @@ public class settingsLogic {
     private double weight;
     private double height;
     private double age;
-    //female = true, male = false
+//    female = true, male = false
     private boolean sex;
 
 
     public settingsLogic() {
         imperial = false;
+
+        goalSet = false;
+        rmrSet = false;
 
         dailyCals = 2000;
         netGoal = 0;
@@ -35,6 +34,7 @@ public class settingsLogic {
 
     public void setGoal(int goal) {
         this.netGoal = goal;
+        goalSet = true;
     }
 
     public void setImperial(boolean n) {
@@ -200,6 +200,7 @@ public class settingsLogic {
     }
 
     public void calculateRMR() {
+        rmrSet = true;
         if (this.sex == true) {
             RMR = (int) (.5 + (10 * this.weight) + (6.25 * this.height) - (5 * this.age) - 161);
         }
@@ -213,6 +214,14 @@ public class settingsLogic {
 
     public int getGoal() {
         return this.netGoal;
+    }
+
+    public boolean isGoalSet() {
+        return goalSet;
+    }
+
+    public boolean isRmrSet() {
+        return rmrSet;
     }
 
 

@@ -10,11 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class dietGraphics extends BorderPane {
 
 
 
-    public dietGraphics() {
+    public dietGraphics(settingsLogic settingsLogic) {
 
         Date datey = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -113,7 +111,7 @@ public class dietGraphics extends BorderPane {
             public void handle(ActionEvent actionEvent) {
 
                 Stage s = (Stage) dietGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s);
+                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");
