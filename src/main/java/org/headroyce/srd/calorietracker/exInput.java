@@ -75,24 +75,28 @@ public class exInput extends BorderPane {
 
         Button calsBurned = new Button("Calculate Calories Burned");
 
-        calsBurned.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-              double realCalsBurned = (3.5 * metPass * 60) / 200;
-                Text displayBurnedCals = new Text("You burned " + realCalsBurned + "calories.");
-                displayBurnedCals.setFont(new Font(13));
-
-                VBox burnedBox = new VBox(displayBurnedCals);
-                burnedBox.setAlignment(Pos.CENTER);
-            }
-        });
-
-
         VBox yur = new VBox(title, textFields, metDes, met, metVal, calsBurned);
         yur.setAlignment(Pos.TOP_CENTER);
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
         this.setTop(yur);
+
+        calsBurned.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                double mins = Double.parseDouble(time.getText());
+                double realCalsBurned = mins * (3.5 * metPass * settingsLogic.getWeight()) / 200;
+                Text displayBurnedCals = new Text("You burned " + realCalsBurned + "calories.");
+                displayBurnedCals.setFont(new Font(13));
+
+
+
+                yur.getChildren().add(displayBurnedCals);
+
+                VBox burnedBox = new VBox(displayBurnedCals);
+                burnedBox.setAlignment(Pos.CENTER);
+            }
+        });
 
         Button back = new Button("Back");
 

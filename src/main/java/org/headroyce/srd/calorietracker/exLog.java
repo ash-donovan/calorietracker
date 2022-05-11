@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class exLog extends BorderPane {
 
-    public exLog(){
+    public exLog(settingsLogic settingsLogic){
         ListView<String> exName = new ListView<String>();
         ObservableList<String> activity = FXCollections.observableArrayList();
         exName.setItems(activity);
@@ -33,11 +33,13 @@ public class exLog extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exLog.this.getScene().getWindow();
-                exGraphics exGraphics =new exGraphics();
+                exGraphics exGraphics = new exGraphics(settingsLogic);
                 Scene exScene = new Scene(exGraphics, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
             }
         });
+
+
 
         HBox lists = new HBox(exName, exDuration,  calsBurned);
         this.setCenter(lists);

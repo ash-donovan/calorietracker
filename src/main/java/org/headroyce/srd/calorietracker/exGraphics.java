@@ -70,7 +70,7 @@ public class exGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exGraphics.this.getScene().getWindow();
-                exLog exLog = new exLog();
+                exLog exLog = new exLog(settingsLogic);
                 Scene logPage = new Scene(exLog, s.getWidth(), s.getHeight());
                 s.setScene(logPage);
                 s.setTitle("Exercise Log");
