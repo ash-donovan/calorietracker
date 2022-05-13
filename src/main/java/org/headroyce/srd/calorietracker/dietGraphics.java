@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -73,6 +72,8 @@ public class dietGraphics extends BorderPane {
                 namey.setSpacing(20);
 
 
+
+
                 Button enter = new Button("Enter");
                 enter.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -82,18 +83,9 @@ public class dietGraphics extends BorderPane {
                         items.add(name);
                         calItems.add(calTake);
                         addFood.close();
-
-                        try {
-                            PrintWriter out = new PrintWriter("dataStore");
-                            out.println(monthNow + "," + dayNow + "," + name + "," + calTake);
-
-                            out.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
                     }
                 });
+
 
                 VBox enterFood = new VBox(namey, caloric, enter);
                 enterFood.setAlignment(Pos.TOP_CENTER);
@@ -105,10 +97,23 @@ public class dietGraphics extends BorderPane {
             }
         });
 
+
         Button home = new Button("Home");
         home.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+
+                    try {
+                        PrintWriter out = new PrintWriter("foodStore");
+                        for(int i = 0; i < items.size(); i++) {
+                            out.println(monthNow + "," + dayNow + "," + items.get(i) + "," + calItems.get(i));
+                        }
+                        out.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
 
                 Stage s = (Stage) dietGraphics.this.getScene().getWindow();
                 homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
@@ -117,10 +122,9 @@ public class dietGraphics extends BorderPane {
                 s.setTitle("Home");
             }
         });
-
-        HBox lists = new HBox(names, calCounts);
         HBox actions = new HBox(home, addMeal);
-      this.setTop(actions);
+        HBox lists = new HBox(names, calCounts);
+        this.setTop(actions);
       this.setCenter(lists);
     }
 
