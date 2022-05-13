@@ -16,7 +16,9 @@ public class settingsLogic {
 //    female = true, male = false
     private boolean sex;
 
-
+    /**
+     * creates an instance of settingsLogic
+     */
     public settingsLogic() {
         imperial = false;
 
@@ -32,11 +34,22 @@ public class settingsLogic {
         age = 40;
     }
 
+    /**
+     * sets the calorie goal of the user
+     * @param goal the goal (in calories) that the user set
+     *             negative values = weight loss
+     *             positive values = weight gain
+     *             0 = weight maintenance
+     */
     public void setGoal(int goal) {
         this.netGoal = goal;
         goalSet = true;
     }
 
+    /**
+     * sets the value of imperial
+     * @param n true if using imperial measurements, false otherwise
+     */
     public void setImperial(boolean n) {
         this.imperial = n;
     }
@@ -81,6 +94,12 @@ public class settingsLogic {
         return this.sex;
     }
 
+    /**
+     * sets the height of the user based on their input
+     * height cannot be negative, or have letters, symbols, or punctuation
+     * @param s height input from RMR Calculator
+     * @return true if the height can be set, false otherwise
+     */
     public boolean setHeight(String s){
 
         if (s == null || s == "") {
@@ -95,11 +114,13 @@ public class settingsLogic {
             }
         }
 
+        int stringLength = s.length();
 
         StringBuilder str = new StringBuilder(s);
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < stringLength; i++) {
             if (s.charAt(i) == ' ') {
                 str.deleteCharAt(i);
+                stringLength--;
             }
         }
         String ns = str.toString();
@@ -122,6 +143,12 @@ public class settingsLogic {
         return true;
     }
 
+    /**
+     * sets the weight of the user based on their input
+     * height cannot be negative, or have letters, symbols, or punctuation
+     * @param s weight input from RMR Calculator
+     * @return true if the weight can be set, false otherwise
+     */
     public boolean setWeight(String s){
         if (s == null || s == "") {
             return false;
@@ -135,11 +162,12 @@ public class settingsLogic {
             }
         }
 
-
+        int stringLength = s.length();
         StringBuilder str = new StringBuilder(s);
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < stringLength; i++) {
             if (s.charAt(i) == ' ') {
                 str.deleteCharAt(i);
+                stringLength--;
             }
         }
         String ns = str.toString();
@@ -161,6 +189,12 @@ public class settingsLogic {
 
     }
 
+    /**
+     * sets the age of the user based on their input
+     * age cannot be negative, or have letters, symbols, or punctuation
+     * @param s age input from RMR Calculator
+     * @return true if the weight can be set, false otherwise
+     */
     public boolean setAge(String s){
         if (s == null || s == "") {
             return false;
@@ -174,15 +208,15 @@ public class settingsLogic {
             }
         }
 
+        int stringLength = s.length();
         StringBuilder str = new StringBuilder(s);
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < stringLength; i++) {
             if (s.charAt(i) == ' ') {
                 str.deleteCharAt(i);
+                stringLength--;
             }
         }
         String ns = str.toString();
-
-
 
         double a = Double.parseDouble(ns);
 
@@ -194,12 +228,21 @@ public class settingsLogic {
         return true;
     }
 
+    /**
+     * sets the sex of the user based on their input
+     * sex is either male or female
+     * @param s sex input from RMR Calculator (female = true, male = false)
+     * @return true if the weight can be set, false otherwise
+     */
     public boolean setSex(boolean s) {
         this.sex = s;        
         return true;
         
     }
 
+    /**
+     * calculates RMR of the user
+     */
     public void calculateRMR() {
         rmrSet = true;
         if (this.sex == true) {
@@ -213,16 +256,37 @@ public class settingsLogic {
 
     }
 
+    /**
+     * returns value of goal attribute
+     * @return the calorie
+     */
     public int getGoal() {
         return this.netGoal;
     }
 
+    /**
+     * returns whether or not user's goal has been set
+     * @return true if goal has been set, false otherwise
+     */
     public boolean isGoalSet() {
         return goalSet;
     }
 
+    /**
+     * returns whether or not user's RMR has been set
+     * @return true if RMR has been set, false otherwise
+     */
     public boolean isRmrSet() {
         return rmrSet;
+    }
+
+    /**
+     * returns dailyCals, or how many cals user should eat a day
+     * according to their goal and RMR
+     * @return dailyCals
+     */
+    public int getDailyCals() {
+        return this.dailyCals;
     }
 
 

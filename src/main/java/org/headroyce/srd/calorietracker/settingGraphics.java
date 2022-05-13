@@ -33,9 +33,6 @@ public class settingGraphics extends BorderPane {
 
         Button rmrButton = new Button("Find RMR");
 
-//        Text calGoal = new Text( logic.getDailyCals() + " calories");
-//        calGoal.setTextAlignment(TextAlignment.JUSTIFY);
-
         VBox rmrBox = new VBox(10, setRMR, rmrExplained, rmrButton);
         rmrBox.setAlignment(Pos.CENTER);
 
@@ -110,10 +107,6 @@ public class settingGraphics extends BorderPane {
             }
         });
 
-    }
-
-    public settingsLogic getSettingsLogic() {
-        return this.settingsLogic;
     }
 
 }

@@ -15,6 +15,10 @@ public class homeGraphics extends BorderPane {
     settingGraphics setting;
     settingsLogic settingsLogic = new settingsLogic();
 
+    public homeGraphics(Stage stage, settingsLogic settingsLogic, String string) {
+
+    }
+
 
     public homeGraphics(Stage stage, settingsLogic settingsLogic) {
 
@@ -36,11 +40,9 @@ public class homeGraphics extends BorderPane {
         settings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
                 Scene settingScene = new Scene(setting, s.getWidth(),s.getHeight());
                 s.setScene(settingScene);
                 s.setTitle("Settings");
-
             }
         });
 
@@ -48,19 +50,16 @@ public class homeGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 exGraphics exGraphic = new exGraphics(homeGraphics.this.settingsLogic);
-
                 Scene exScene = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
                 s.setTitle("Exercise Tab");
             }
         });
 
-
         diet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 dietGraphics dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
-
                 Scene dietScene = new Scene(dietGraphic, s.getWidth(), s.getHeight());
                 s.setScene(dietScene);
                 s.setTitle("Diet Tab");
@@ -71,26 +70,19 @@ public class homeGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 calGraphics calGraphic = new calGraphics(homeGraphics.this.settingsLogic);
-
                 Scene calScene = new Scene(calGraphic, s.getWidth(), s.getHeight());
                 s.setScene(calScene);
                 s.setTitle("Calendar Tab");
             }
         });
 
-
         VBox actions = new VBox(exercise, diet, calendar);
         actions.setSpacing(20);
         actions.setAlignment(Pos.CENTER);
 
-
         this.setCenter(actions);
         this.setTop(settings);
-
     }
 
 
-    public settingGraphics getSettingGraphics() {
-        return this.setting;
-    }
 }
