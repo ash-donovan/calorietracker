@@ -89,17 +89,9 @@ public class exInput extends BorderPane {
 
                 String t = time.getText();
 
-                if (isInputOk(t)) {
+                if (inputOk(t) != -1) {
 
-                    StringBuilder str = new StringBuilder(t);
-                    for (int i = 0; i < t.length(); i++) {
-                        if (t.charAt(i) == ' ') {
-                            str.deleteCharAt(i);
-                        }
-                    }
-                    String ns = str.toString();
-
-                    double mins = Double.parseDouble(ns);
+                    double mins = inputOk(t);
 
                     double calculated = mins * (3.5 * metPass * settingsLogic.getWeight()) / 200;
                     int realCalsBurned = (int) (calculated + .5);
@@ -188,36 +180,47 @@ public class exInput extends BorderPane {
 
     }
 
-    private boolean isInputOk(String s) {
+    private double inputOk(String s) {
         if (s == null || s == "") {
-            return false;
+            return -1;
         }
 
         for (int i = 0; i < s.length(); i++) {
             if (!(s.charAt(i) == '0' || s.charAt(i) == '1' || s.charAt(i) == '2' || s.charAt(i) == '3' || s.charAt(i) == '4'
                     || s.charAt(i) == '5' || s.charAt(i) == '6'|| s.charAt(i) == '7'
                     || s.charAt(i) == '8' || s.charAt(i) == '9' || s.charAt(i) == '.' || s.charAt(i) == ' ')) {
-                return false;
+                return -1;
             }
         }
 
+        double a = -1;
+        System.out.println("[" + s + "]");
+
+        int stringLength = s.length();
+
         StringBuilder str = new StringBuilder(s);
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < stringLength; i++) {
             if (s.charAt(i) == ' ') {
                 str.deleteCharAt(i);
+                stringLength--;
+
             }
 
             String ns = str.toString();
 
-            double a = Double.parseDouble(ns);
+            if (ns == "") {
+                return -1;
+            }
 
-            if (a < 1) {
-                return false;
+            else {
+                a = Double.parseDouble(ns);
+                if (a < 1) {
+                    return -1;
+                }
             }
         }
 
-        return true;
-
+        return a;
     }
 
 }

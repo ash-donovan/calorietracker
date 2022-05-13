@@ -135,6 +135,7 @@ public class settingsLogic {
             }
         }
 
+
         StringBuilder str = new StringBuilder(s);
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == ' ') {
