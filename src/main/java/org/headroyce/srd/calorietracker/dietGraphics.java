@@ -15,19 +15,26 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class dietGraphics extends BorderPane {
 
-    String name;
-    int calTake;
-    ArrayList<Integer> cals;
-    ArrayList<String> allNames;
+   private String name;
+    private int calTake;
+
+
 
     public dietGraphics(settingsLogic settingsLogic) {
 
-        cals = new ArrayList<>();
-        allNames = new ArrayList<>();
+        Date datey = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datey);
+
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+        int monthNow = calendar.get(Calendar.MONTH) + 1;
+
+
        ListView<String> names = new ListView<String>();
        ObservableList<String> items = FXCollections.observableArrayList();
         names.setItems(items);
@@ -65,26 +72,20 @@ public class dietGraphics extends BorderPane {
                 namey.setSpacing(20);
 
 
+
+
                 Button enter = new Button("Enter");
                 enter.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         name = foodName.getText();
                         calTake = calCount.getValue();
-
+                        items.add(name);
+                        calItems.add(calTake);
                         addFood.close();
-
-                        try {
-                            PrintWriter out = new PrintWriter("dataStore");
-                            out.println(name + "," + calTake);
-
-                            out.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
                     }
                 });
+
 
                 VBox enterFood = new VBox(namey, caloric, enter);
                 enterFood.setAlignment(Pos.TOP_CENTER);
@@ -96,11 +97,23 @@ public class dietGraphics extends BorderPane {
             }
         });
 
+
         Button home = new Button("Home");
         home.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(allNames);
+
+
+                    try {
+                        PrintWriter out = new PrintWriter("foodStore");
+                        for(int i = 0; i < items.size(); i++) {
+                            out.println(monthNow + "," + dayNow + "," + items.get(i) + "," + calItems.get(i));
+                        }
+                        out.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
 
                 Stage s = (Stage) dietGraphics.this.getScene().getWindow();
                 homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
@@ -109,21 +122,11 @@ public class dietGraphics extends BorderPane {
                 s.setTitle("Home");
             }
         });
-
-        HBox lists = new HBox(names, calCounts);
         HBox actions = new HBox(home, addMeal);
-      this.setTop(actions);
+        HBox lists = new HBox(names, calCounts);
+        this.setTop(actions);
       this.setCenter(lists);
     }
-
-
-    public String[] getNames(){
-        return (String[]) allNames.toArray();
-    }
-
-public Integer[] getCals(){
-        return (Integer[]) cals.toArray();
-}
 
 
 

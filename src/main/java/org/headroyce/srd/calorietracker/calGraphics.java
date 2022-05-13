@@ -10,6 +10,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Date;
+
 public class calGraphics extends BorderPane {
     private Button[][] days;
     int counter;
@@ -20,8 +24,17 @@ public class calGraphics extends BorderPane {
 
     public calGraphics(settingsLogic settingsLogic) {
         calLogic calLogic = new calLogic();
-        month = 1;
-        day = 1;
+
+        Date datey = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datey);
+
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+        int monthNow = calendar.get(Calendar.MONTH) + 1;
+
+
+        month = monthNow;
+        day = dayNow;
         days = new Button[5][7];
         monthText = new Text();
         monthText.setText(calLogic.getMonthText(month));
@@ -65,15 +78,21 @@ public class calGraphics extends BorderPane {
                     counter = 1;
                 }
                 button.setText("" + counter);
+                int dayRight = counter;
 
                 button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         Stage s = (Stage) calGraphics.this.getScene().getWindow();
-                        dayGraphics dayGraphic = new dayGraphics(month, counter);
+                        dayGraphics dayGraphic = null;
+                        try {
+                            dayGraphic = new dayGraphics(month, dayRight, settingsLogic);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         Scene dayScene = new Scene(dayGraphic, s.getWidth(), s.getHeight());
                         s.setScene(dayScene);
-                        s.setTitle("" + month + "/" + counter);
+                        s.setTitle("" + month + "/" + dayRight);
 
                     }
                 });
