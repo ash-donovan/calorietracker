@@ -6,7 +6,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -15,11 +20,53 @@ public class homeGraphics extends BorderPane {
 
     private Stage s;
     settingGraphics setting;
-    settingsLogic settingsLogic = new settingsLogic();
+    private settingsLogic settingsLogic = new settingsLogic();
 
-    public homeGraphics(Stage stage, settingsLogic settingsLogic, String string) {
+    //TODO: FIGURE OUT WTF IS UP W/ THE STAGE (MANIFESTING AS TEXT ALIGNMENT ISSUES)
 
+
+    public homeGraphics(Stage stage, settingsLogic settingsLogic, int i) {
+
+        s = stage;
+        setting = new settingGraphics(s, this.settingsLogic);
+
+        Text title = new Text("Welcome");
+        Text welcomeText = new Text("Welcome to CalorieTracker, where we can help your fitness goals come true! " +
+                "To start, lets configure your settings to personalize your experience.");
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setFont(new Font(30));
+        welcomeText.setTextAlignment(TextAlignment.CENTER);
+        welcomeText.setWrappingWidth(stage.getWidth()/1.5);
+
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            welcomeText.setWrappingWidth(stage.getWidth()/1.5);
+        });
+
+
+
+
+        Button settingsButton = new Button("Settings");
+
+        VBox mainbox = new VBox(10, spacerMaker(), title, welcomeText,
+                settingsButton, spacerMaker(), spacerMaker());
+        mainbox.setAlignment(Pos.CENTER);
+
+
+
+        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Scene settingScene = new Scene(setting, s.getWidth(),s.getHeight());
+                s.setScene(settingScene);
+                s.setTitle("Settings");
+            }
+        });
+
+
+        this.setCenter(mainbox);
     }
+
+
 
 
     public homeGraphics(Stage stage, settingsLogic settingsLogic) {
@@ -51,7 +98,7 @@ public class homeGraphics extends BorderPane {
         exercise.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                exGraphics exGraphic = new exGraphics(homeGraphics.this.settingsLogic);
+                exGraphics exGraphic = new exGraphics(s, homeGraphics.this.settingsLogic);
                 Scene exScene = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
                 s.setTitle("Exercise Tab");
@@ -89,6 +136,14 @@ public class homeGraphics extends BorderPane {
 
         this.setCenter(actions);
         this.setTop(settings);
+    }
+
+
+
+    private Region spacerMaker() {
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        return spacer;
     }
 
 
