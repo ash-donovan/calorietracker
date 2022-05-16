@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class homeGraphics extends BorderPane {
 
     private Stage s;
@@ -59,7 +61,12 @@ public class homeGraphics extends BorderPane {
         diet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                dietGraphics dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
+                dietGraphics dietGraphic = null;
+                try {
+                    dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 Scene dietScene = new Scene(dietGraphic, s.getWidth(), s.getHeight());
                 s.setScene(dietScene);
                 s.setTitle("Diet Tab");
