@@ -33,7 +33,7 @@ public class exLog extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exLog.this.getScene().getWindow();
-                exGraphics exGraphics = new exGraphics(settingsLogic);
+                exGraphics exGraphics = new exGraphics(s, settingsLogic);
                 Scene exScene = new Scene(exGraphics, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
             }

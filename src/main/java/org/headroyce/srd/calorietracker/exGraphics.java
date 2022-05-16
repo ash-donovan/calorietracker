@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class exGraphics extends BorderPane {
 
-    public exGraphics(settingsLogic settingsLogic) {
+    public exGraphics(Stage stage, settingsLogic settingsLogic) {
 
 
 
@@ -21,6 +21,7 @@ public class exGraphics extends BorderPane {
         title.setFont(new Font(30));
 
         Text inputDes = new Text("Input your activities here:");
+        inputDes.setWrappingWidth(stage.getWidth()/1.5);
         inputDes.setFont(new Font(15));
 
         Button input = new Button("Input");
@@ -28,6 +29,8 @@ public class exGraphics extends BorderPane {
 
         Text logDes = new Text("Access your activities from today here:");
         logDes.setFont(new Font(15));
+        logDes.setWrappingWidth(stage.getWidth()/1.5);
+
 
         Button log = new Button("Log");
         log.setFont(new Font(15));

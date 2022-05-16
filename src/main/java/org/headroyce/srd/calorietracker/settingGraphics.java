@@ -21,6 +21,8 @@ public class settingGraphics extends BorderPane {
         this.settingsLogic = settingsLogic;
 
 
+
+
         Text title = new Text("Settings");
         title.setFont(new Font(30));
 
@@ -29,7 +31,7 @@ public class settingGraphics extends BorderPane {
         Text rmrExplained = new Text("Your resting metabolic rate (RMR) is how many calories you burn during the " +
                 "day without exercise. Calculate your RMR here:");
         rmrExplained.setTextAlignment(TextAlignment.CENTER);
-        rmrExplained.setWrappingWidth(stage.getWidth()/2);
+        rmrExplained.setWrappingWidth(stage.getWidth()/1.5);
 
         Button rmrButton = new Button("Find RMR");
 
@@ -40,12 +42,12 @@ public class settingGraphics extends BorderPane {
         Text goalExplained = new Text("Your goal is how many calories you want to add or cut from your " +
                 "diet. You can also choose to maintain weight. Set a goal here:");
         goalExplained.setTextAlignment(TextAlignment.CENTER);
-        goalExplained.setWrappingWidth(stage.getWidth()/2);
+        goalExplained.setWrappingWidth(stage.getWidth()/1.5);
 
         stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            rmrExplained.setWrappingWidth(stage.getWidth()/2);
+            rmrExplained.setWrappingWidth(stage.getWidth()/1.5);
 
-            goalExplained.setWrappingWidth(stage.getWidth()/2);
+            goalExplained.setWrappingWidth(stage.getWidth()/1.5);
         });
 
 
