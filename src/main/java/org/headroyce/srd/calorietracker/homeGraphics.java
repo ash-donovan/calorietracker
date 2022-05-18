@@ -45,6 +45,8 @@ public class homeGraphics extends BorderPane {
 
 
 
+
+
         Button settingsButton = new Button("Settings");
 
         VBox mainbox = new VBox(10, spacerMaker(), title, welcomeText,
