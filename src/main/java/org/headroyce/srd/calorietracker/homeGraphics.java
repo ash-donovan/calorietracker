@@ -74,6 +74,13 @@ public class homeGraphics extends BorderPane {
         s = stage;
         setting = new settingGraphics(s, settingsLogic);
 
+        //explanation texts
+        Text exerciseTitle = new Text("EXERCISE");
+        Text exerciseText = new Text("Click here to input exercise and calculate the amount of calories burned. " +
+                "You can also view your activity from today.");
+
+        Text calendarTitle = new Text("CALENDAR");
+
         //buttons to change tabs
         Button exercise = new Button("Exercise");
         Button calendar = new Button("Calendar");
