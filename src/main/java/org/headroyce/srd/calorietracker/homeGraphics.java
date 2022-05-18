@@ -20,15 +20,13 @@ public class homeGraphics extends BorderPane {
 
     private Stage s;
     settingGraphics setting;
-    private settingsLogic settingsLogic = new settingsLogic();
 
-    //TODO: FIGURE OUT WTF IS UP W/ THE STAGE (MANIFESTING AS TEXT ALIGNMENT ISSUES)
 
 
     public homeGraphics(Stage stage, settingsLogic settingsLogic, int i) {
 
         s = stage;
-        setting = new settingGraphics(s, this.settingsLogic);
+        setting = new settingGraphics(s, settingsLogic);
 
         Text title = new Text("Welcome");
         Text welcomeText = new Text("Welcome to CalorieTracker, where we can help your fitness goals come true! " +
@@ -74,7 +72,7 @@ public class homeGraphics extends BorderPane {
     public homeGraphics(Stage stage, settingsLogic settingsLogic) {
 
         s = stage;
-        setting = new settingGraphics(s, this.settingsLogic);
+        setting = new settingGraphics(s, settingsLogic);
 
         //buttons to change tabs
         Button exercise = new Button("Exercise");
@@ -100,7 +98,7 @@ public class homeGraphics extends BorderPane {
         exercise.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                exGraphics exGraphic = new exGraphics(s, homeGraphics.this.settingsLogic);
+                exGraphics exGraphic = new exGraphics(s, settingsLogic);
                 Scene exScene = new Scene(exGraphic, s.getWidth(), s.getHeight());
                 s.setScene(exScene);
                 s.setTitle("Exercise Tab");
@@ -112,7 +110,7 @@ public class homeGraphics extends BorderPane {
             public void handle(ActionEvent actionEvent) {
                 dietGraphics dietGraphic = null;
                 try {
-                    dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
+                    dietGraphic = new dietGraphics(settingsLogic);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -125,7 +123,7 @@ public class homeGraphics extends BorderPane {
         calendar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                calGraphics calGraphic = new calGraphics(homeGraphics.this.settingsLogic);
+                calGraphics calGraphic = new calGraphics(settingsLogic);
                 Scene calScene = new Scene(calGraphic, s.getWidth(), s.getHeight());
                 s.setScene(calScene);
                 s.setTitle("Calendar Tab");

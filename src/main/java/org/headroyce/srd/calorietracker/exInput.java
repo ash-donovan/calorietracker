@@ -170,12 +170,7 @@ public class exInput extends BorderPane {
                     yur.getChildren().addAll(title, textFields, metDes, met,
                             metVal, calsBurned, warningBox);
 
-
-
                 }
-
-
-
 
             }
         });

@@ -33,7 +33,6 @@ public class dayGraphics extends BorderPane {
            String[] parts = userData.split(",");
             RMR = Integer.parseInt(parts[4]);
             calGoal = Integer.parseInt(parts[5]);
-
         }
 
         Button back = new Button("Back");

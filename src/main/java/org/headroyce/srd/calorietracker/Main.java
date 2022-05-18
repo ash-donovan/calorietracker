@@ -24,9 +24,9 @@ public class Main extends Application {
         Scanner scanner = new Scanner(new File("userData"));
 
             if(!scanner.hasNextLine()){
-            home = new homeGraphics(stage, new settingsLogic(), 1);
+            home = new homeGraphics(stage, new settingsLogic(false), 1);
             } else {
-                home = new homeGraphics(stage, new settingsLogic());
+                home = new homeGraphics(stage, new settingsLogic(true));
             }
 
         Scene scene = new Scene(home, 500, 500);
