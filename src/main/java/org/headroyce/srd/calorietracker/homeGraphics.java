@@ -80,31 +80,25 @@ public class homeGraphics extends BorderPane {
                 "You can also view your activity from today.");
         exerciseText.setTextAlignment(TextAlignment.CENTER);
         exerciseTitle.setTextAlignment(TextAlignment.CENTER);
-        exerciseTitle.setWrappingWidth(stage.getWidth()/1.5);
-
-
+        exerciseText.setWrappingWidth(s.getWidth()/1.5);
 
         Text calendarTitle = new Text("CALENDAR");
         Text calendarText = new Text("View your past exercise and diet history here");
         calendarText.setTextAlignment(TextAlignment.CENTER);
         calendarTitle.setTextAlignment(TextAlignment.CENTER);
-        calendarTitle.setWrappingWidth(stage.getWidth()/1.5);
-
-
+        calendarText.setWrappingWidth(stage.getWidth()/1.5);
 
         Text dietTitle = new Text("DIET");
         Text dietText = new Text("Input food you've eaten here, or view what you've eaten today.");
         dietText.setTextAlignment(TextAlignment.CENTER);
         dietTitle.setTextAlignment(TextAlignment.CENTER);
-        dietTitle.setWrappingWidth(stage.getWidth()/1.5);
-
-
+        dietText.setWrappingWidth(stage.getWidth()/1.5);
 
         Text settingsTitle = new Text("SETTINGS");
         Text settingsText = new Text("Change your settings here. You can change your RMR or set a different goal.");
         settingsText.setTextAlignment(TextAlignment.CENTER);
         settingsTitle.setTextAlignment(TextAlignment.CENTER);
-        settingsTitle.setWrappingWidth(stage.getWidth()/1.5);
+        settingsText.setWrappingWidth(stage.getWidth()/1.5);
 
         //buttons to change tabs
         Button exercise = new Button("Exercise");
@@ -121,11 +115,6 @@ public class homeGraphics extends BorderPane {
         exerciseBox.setAlignment(Pos.CENTER);
         calendarBox.setAlignment(Pos.CENTER);
         settingsBox.setAlignment(Pos.CENTER);
-
-
-
-
-
 
 //        //button sizing
 //        exercise.setMaxSize(300, 300);
@@ -177,11 +166,20 @@ public class homeGraphics extends BorderPane {
             }
         });
 
-        VBox actions = new VBox(exercise, diet, calendar);
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            settingsText.setWrappingWidth(stage.getWidth()/1.5);
+            calendarText.setWrappingWidth(stage.getWidth()/1.5);
+            exerciseText.setWrappingWidth(stage.getWidth()/1.5);
+            dietText.setWrappingWidth(stage.getWidth()/1.5);
+
+
+        });
+
+
+        VBox actions = new VBox(5, spacerMaker(), dietBox, spacerMaker(), exerciseBox, spacerMaker(), calendarBox, spacerMaker(), settingsBox, spacerMaker());
         actions.setAlignment(Pos.CENTER);
 
         this.setCenter(actions);
-        this.setTop(settings);
     }
 
 
