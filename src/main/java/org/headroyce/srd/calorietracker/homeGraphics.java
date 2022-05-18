@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -40,18 +41,17 @@ public class homeGraphics extends BorderPane {
             welcomeText.setWrappingWidth(stage.getWidth()/1.5);
         });
 
+        Text manualTitle = new Text("User Manual:");
+        manualTitle.setFont(new Font(20));
 
-
-
-
+        Hyperlink manual = new Hyperlink();
+        manual.setText("https://docs.google.com/presentation/d/1XsGYBGDg_bU-SWOYgpGeiPl_7kyCpseViepp2Yp5FZc/edit#slide=id.g12a1a440d90_0_14");
 
         Button settingsButton = new Button("Settings");
 
         VBox mainbox = new VBox(10, spacerMaker(), title, welcomeText,
-                settingsButton, spacerMaker(), spacerMaker());
+                settingsButton, manualTitle, manual, spacerMaker());
         mainbox.setAlignment(Pos.CENTER);
-
-
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -80,6 +80,14 @@ public class homeGraphics extends BorderPane {
                 "You can also view your activity from today.");
 
         Text calendarTitle = new Text("CALENDAR");
+        Text calendarText = new Text("View your past exercise and diet history here");
+
+        Text dietTitle = new Text("DIET");
+        Text dietText = new Text("Input food you've eaten here, or view what you've eaten today.");
+
+        Text settingsTitle = new Text("SETTINGS");
+        Text settingsText = new Text("Change your settings here. You can change your RMR or set a different goal.");
+
 
         //buttons to change tabs
         Button exercise = new Button("Exercise");
