@@ -98,6 +98,10 @@ public class exGraphics extends BorderPane {
         
     }
 
+    /**
+     * generates spacers
+     * @return a blank region with a Vgrow of ALWAYS
+     */
     public Region spacerMaker() {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);

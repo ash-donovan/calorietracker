@@ -89,12 +89,6 @@ public class dayGraphics extends BorderPane {
                     + " calories away from your goal of " + calGoal + " !");
             }
 
-
-
-
-
-
-
         this.setCenter(all);
         this.setTop(back);
         this.setBottom(goals);

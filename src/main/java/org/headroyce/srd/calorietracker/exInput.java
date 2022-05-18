@@ -197,6 +197,12 @@ public class exInput extends BorderPane {
 
     }
 
+
+    /**
+     * checks if string input has any letters, symbols/characters, is an empty string
+     * @param s
+     * @return
+     */
     private double inputOk(String s) {
         if (s == null || s == "") {
             return -1;
@@ -211,7 +217,6 @@ public class exInput extends BorderPane {
         }
 
         double a = -1;
-        System.out.println("[" + s + "]");
 
         int stringLength = s.length();
 

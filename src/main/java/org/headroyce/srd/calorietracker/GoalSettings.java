@@ -224,6 +224,10 @@ public class GoalSettings extends BorderPane {
         return false;
     }
 
+    /**
+     * generates spacers
+     * @return a blank region with a Vgrow of ALWAYS
+     */
     private Region spacerMaker() {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
