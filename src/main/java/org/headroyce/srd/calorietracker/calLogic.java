@@ -24,10 +24,10 @@ public class calLogic {
     public String getMonthText(int month){
         String monthText = "";
         if(month == 1){
-            monthText = "Janurary";
+            monthText = "January";
         }
         if (month == 2){
-            monthText = "Febuary";
+            monthText = "February";
         }
         if (month == 3){
             monthText = "March";

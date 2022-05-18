@@ -14,6 +14,10 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class GoalSettings extends BorderPane {
 
     private int goalNumber;
@@ -104,7 +108,12 @@ public class GoalSettings extends BorderPane {
                     settingsLogic.setGoal(goalNumber * -1);
                 }
 
-                GoalSettings GoalSettings = new GoalSettings(stage, settingsLogic, GML);
+                GoalSettings GoalSettings = null;
+                try {
+                    GoalSettings = new GoalSettings(stage, settingsLogic, GML);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 Scene GoalScene = new Scene(GoalSettings, stage.getWidth(), stage.getHeight());
                 stage.setScene(GoalScene);
                 stage.setTitle("Goal has been set!");
@@ -138,7 +147,7 @@ public class GoalSettings extends BorderPane {
         });
     }
 
-    private GoalSettings(Stage stage, settingsLogic settingsLogic, String GML){
+    private GoalSettings(Stage stage, settingsLogic settingsLogic, String GML) throws FileNotFoundException {
         
         Text title = new Text("All Set!");
         title.setFont(new Font(30));
@@ -165,8 +174,9 @@ public class GoalSettings extends BorderPane {
 
         Button action = new Button("OK");
 
+        Scanner scanner = new Scanner(new File("userData"));
 
-        if (!settingsLogic.isRmrSet()) {
+        if(!scanner.hasNextLine()){
             c.setText("You haven't calculated your RMR yet! Calculate your RMR to find out how many calories you need to eat in a day");
             c.setWrappingWidth(stage.getWidth()/2);
             c.setFill(Color.INDIANRED);
@@ -174,10 +184,10 @@ public class GoalSettings extends BorderPane {
             c.setLineSpacing(5);
             action = new Button("Calculate RMR");
             body.getChildren().addAll(spacerMaker(), c, action);
-        }
-        else {
+        } else {
             body.getChildren().add(action);
         }
+
 
         action.setOnAction(new EventHandler<ActionEvent>() {
             @Override
