@@ -175,8 +175,11 @@ public class homeGraphics extends BorderPane {
 
         });
 
+        Text TITLE = new Text("Welcome Back!");
+        TITLE.setFont(new Font(30));
 
-        VBox actions = new VBox(5, spacerMaker(), dietBox, spacerMaker(), exerciseBox, spacerMaker(), calendarBox, spacerMaker(), settingsBox, spacerMaker());
+
+        VBox actions = new VBox(5, spacerMaker(), TITLE, spacerMaker(), dietBox, spacerMaker(), exerciseBox, spacerMaker(), calendarBox, spacerMaker(), settingsBox, spacerMaker());
         actions.setAlignment(Pos.CENTER);
 
         this.setCenter(actions);
