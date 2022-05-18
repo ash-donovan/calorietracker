@@ -41,16 +41,11 @@ public class homeGraphics extends BorderPane {
             welcomeText.setWrappingWidth(stage.getWidth()/1.5);
         });
 
-        Text manualTitle = new Text("User Manual:");
-        manualTitle.setFont(new Font(20));
-
-        Hyperlink manual = new Hyperlink();
-        manual.setText("https://docs.google.com/presentation/d/1XsGYBGDg_bU-SWOYgpGeiPl_7kyCpseViepp2Yp5FZc/edit#slide=id.g12a1a440d90_0_14");
 
         Button settingsButton = new Button("Settings");
 
         VBox mainbox = new VBox(10, spacerMaker(), title, welcomeText,
-                settingsButton, manualTitle, manual, spacerMaker());
+                settingsButton, spacerMaker());
         mainbox.setAlignment(Pos.CENTER);
 
         settingsButton.setOnAction(new EventHandler<ActionEvent>() {

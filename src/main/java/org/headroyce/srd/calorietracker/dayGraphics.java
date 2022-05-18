@@ -25,15 +25,49 @@ public class dayGraphics extends BorderPane {
     private int calGoal = 0;
 
 
+
     public dayGraphics(int month, int day, settingsLogic settingsLogic) throws FileNotFoundException {
 
         Scanner userScan = new Scanner(new File("userData"));
-        while(userScan.hasNextLine()){
+        while(userScan.hasNextLine()) {
+
+
             String userData = userScan.nextLine();
-           String[] parts = userData.split(",");
+            String[] parts = userData.split(",");
+
+
             RMR = Integer.parseInt(parts[4]);
             calGoal = Integer.parseInt(parts[5]);
+            System.out.println(calGoal);
+
+
+
+
+            }
+
+
+
+        Scanner exScan = new Scanner(new File("exerciseStore"));
+        while(exScan.hasNextLine()) {
+            String exData = exScan.nextLine();
+            String[] parts = exData.split(",");
+
+            int parsedMonth = Integer.parseInt(parts[3]);
+            int parsedDay = Integer.parseInt(parts[4]);
+
+
+            if (parsedMonth == month) {
+                if (parsedDay == day) {
+
+                    calsBurn += Integer.parseInt(parts[1]);
+
+                }
+            }
         }
+
+
+
+
 
         Button back = new Button("Back");
         back.setOnAction(new EventHandler<ActionEvent>() {
@@ -81,13 +115,35 @@ public class dayGraphics extends BorderPane {
         all.setAlignment(Pos.CENTER);
         all.setSpacing(50);
 
-        Text goals = new Text("You aren't hitting your goal of "  + calGoal + " for today quite yet! Keep Working!");
+        Text goals = new Text();
         int goalDistance = calGoal - totalCals;
         goals.setFont(Font.font(15));
         if(Math.abs(goalDistance) < 50){
+
+
             goals.setText("You're doing well today! You are "  + goalDistance
                     + " calories away from your goal of " + calGoal + " !");
             }
+
+        if(totalCals > calGoal && goalDistance > 50) {
+            goals.setText("You're over your goal for today, adjust accordingly");
+        }
+
+        if(totalCals < calGoal && goalDistance > 50){
+            goals.setText("Keep working, you're getting closer to your goal!");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         this.setCenter(all);
         this.setTop(back);
