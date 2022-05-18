@@ -14,11 +14,14 @@ public class Main extends Application {
     PrintWriter outputStream;
     @Override
     public void start(Stage stage) throws IOException {
+        boolean isSettingsSet;
 
 //        homeGraphics home = new homeGraphics(stage, new settingsLogic());
+        isSettingsSet = false;
 
 //        if (no text file created) {
-          homeGraphics home = new homeGraphics(stage, new settingsLogic(), 1);
+//        isSettingsSet = false;
+          homeGraphics home = new homeGraphics(stage, new settingsLogic(isSettingsSet), 1);
         // ^^creates first homeGraphics
 //        }
 

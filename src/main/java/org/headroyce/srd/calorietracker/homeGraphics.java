@@ -2,31 +2,32 @@ package org.headroyce.srd.calorietracker;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+
 public class homeGraphics extends BorderPane {
 
     private Stage s;
     settingGraphics setting;
-    private settingsLogic settingsLogic = new settingsLogic();
+    settingsLogic settingsLogic;
 
-    //TODO: FIGURE OUT WTF IS UP W/ THE STAGE (MANIFESTING AS TEXT ALIGNMENT ISSUES)
 
 
     public homeGraphics(Stage stage, settingsLogic settingsLogic, int i) {
+        this.settingsLogic = settingsLogic;
 
         s = stage;
-        setting = new settingGraphics(s, this.settingsLogic);
+        setting = new settingGraphics(s, settingsLogic);
 
         Text title = new Text("Welcome");
         Text welcomeText = new Text("Welcome to CalorieTracker, where we can help your fitness goals come true! " +
@@ -36,19 +37,21 @@ public class homeGraphics extends BorderPane {
         welcomeText.setTextAlignment(TextAlignment.CENTER);
         welcomeText.setWrappingWidth(stage.getWidth()/1.5);
 
+        Region space = new Region();
+        space.setMaxHeight(10);
+        space.setMinHeight(10);
+//        space.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, new CornerRadii(0), new Insets(0))));
+
         stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             welcomeText.setWrappingWidth(stage.getWidth()/1.5);
         });
 
 
 
-
-
-
         Button settingsButton = new Button("Settings");
 
         VBox mainbox = new VBox(10, spacerMaker(), title, welcomeText,
-                settingsButton, spacerMaker(), spacerMaker());
+                settingsButton, spacerMaker(), space);
         mainbox.setAlignment(Pos.CENTER);
 
 

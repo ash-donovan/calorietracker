@@ -194,7 +194,7 @@ public class RmrCalculator extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (settingsLogic.isGoalSet()) {
-                    homeGraphics home = new homeGraphics(stage, new settingsLogic());
+                    homeGraphics home = new homeGraphics(stage, settingsLogic);
                     Scene homeScene = new Scene(home, stage.getWidth(), stage.getHeight());
                     stage.setScene(homeScene);
                     stage.setTitle("Home");

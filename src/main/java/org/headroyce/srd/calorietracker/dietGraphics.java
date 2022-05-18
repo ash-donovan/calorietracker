@@ -88,7 +88,10 @@ public class dietGraphics extends BorderPane {
 
 
                 VBox enterFood = new VBox(namey, caloric, enter);
-                enterFood.setAlignment(Pos.TOP_CENTER);
+                namey.setAlignment(Pos.CENTER);
+                caloric.setAlignment(Pos.CENTER);
+                enter.setAlignment(Pos.CENTER);
+                enterFood.setAlignment(Pos.CENTER);
                 enterFood.setSpacing(50);
 
                 Scene addFoodScene = new Scene(enterFood, 400, 400);
@@ -116,7 +119,7 @@ public class dietGraphics extends BorderPane {
 
 
                 Stage s = (Stage) dietGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
+                homeGraphics homeGraphic = new homeGraphics(s, settingsLogic);
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");

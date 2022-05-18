@@ -20,9 +20,6 @@ public class settingGraphics extends BorderPane {
 
         this.settingsLogic = settingsLogic;
 
-
-
-
         Text title = new Text("Settings");
         title.setFont(new Font(30));
 
@@ -51,13 +48,10 @@ public class settingGraphics extends BorderPane {
         });
 
 
-
-
         Button goalButton = new Button("Choose Goal");
 
         VBox goalBox = new VBox(10, setGoal, goalExplained, goalButton);
         goalBox.setAlignment(Pos.CENTER);
-
 
         Region spacer1 = new Region();
         VBox.setVgrow(spacer1, Priority.ALWAYS);
@@ -65,13 +59,10 @@ public class settingGraphics extends BorderPane {
         VBox.setVgrow(spacer2, Priority.ALWAYS);
         Region spacer3 = new Region();
 
-
         VBox totalBox = new VBox(30, spacer1, title, rmrBox, goalBox, spacer2);
         totalBox.setAlignment(Pos.CENTER);
 
         this.setCenter(totalBox);
-
-
 
         rmrButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -102,7 +93,10 @@ public class settingGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) settingGraphics.this.getScene().getWindow();
-                homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
+                homeGraphics homeGraphic = new homeGraphics(s, settingsLogic);
+                if (!(settingsLogic.isGoalSet() || settingsLogic.isRmrSet())) {
+                    homeGraphic = new homeGraphics(s, settingsLogic, 1);
+                }
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
                 s.setScene(homeScene);
                 s.setTitle("Home");

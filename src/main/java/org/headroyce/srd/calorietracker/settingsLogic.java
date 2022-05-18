@@ -13,25 +13,24 @@ public class settingsLogic {
     private double weight;
     private double height;
     private double age;
-//    female = true, male = false
+
     private boolean sex;
 
     /**
      * creates an instance of settingsLogic
      */
-    public settingsLogic() {
+    public settingsLogic(boolean set) {
+
+        if (set == true) {
+            goalSet = true;
+            rmrSet = true;
+        } else {
+            goalSet = false;
+            rmrSet = false;
+        }
+
         imperial = false;
 
-        goalSet = false;
-        rmrSet = false;
-
-        dailyCals = 2000;
-        netGoal = 0;
-        RMR = 2000;
-
-        weight = 180;
-        height = 67;
-        age = 40;
     }
 
     /**
@@ -47,7 +46,7 @@ public class settingsLogic {
     }
 
     /**
-     * sets the value of imperial
+     * sets value of imperial
      * @param n true if using imperial measurements, false otherwise
      */
     public void setImperial(boolean n) {
@@ -55,8 +54,8 @@ public class settingsLogic {
     }
 
     /**
-     * returns the user's calculated RMR, or default if they haven't set it yet
-     * @return RMR
+     * returns the user's RMR
+     * @return RMR of user, or default of 2000 if not set
      */
     public int getRMR() {
         return this.RMR;
@@ -71,7 +70,7 @@ public class settingsLogic {
     }
 
     /**
-     * returns the user's height or a default height of 67
+     * returns the user's height
      * @return weight of user
      */
     public double getHeight() {
@@ -96,8 +95,8 @@ public class settingsLogic {
 
     /**
      * sets the height of the user based on their input
-     * height cannot be negative, or have letters, symbols, or punctuation
-     * @param s height input from RMR Calculator
+     * height cannot be 0, negative, or have letters, symbols, or punctuation
+     * @param s height input
      * @return true if the height can be set, false otherwise
      */
     public boolean setHeight(String s){
@@ -144,9 +143,9 @@ public class settingsLogic {
     }
 
     /**
-     * sets the weight of the user based on their input
-     * height cannot be negative, or have letters, symbols, or punctuation
-     * @param s weight input from RMR Calculator
+     * sets the weight of the user
+     * height cannot be 0, negative, or have letters, symbols, or punctuation
+     * @param s weight input
      * @return true if the weight can be set, false otherwise
      */
     public boolean setWeight(String s){
@@ -190,8 +189,8 @@ public class settingsLogic {
     }
 
     /**
-     * sets the age of the user based on their input
-     * age cannot be negative, or have letters, symbols, or punctuation
+     * sets the age of the user
+     * age cannot be 0, negative, or have letters, symbols, or punctuation
      * @param s age input from RMR Calculator
      * @return true if the weight can be set, false otherwise
      */
@@ -249,7 +248,7 @@ public class settingsLogic {
             RMR = (int) (.5 + (10 * this.weight) + (6.25 * this.height) - (5 * this.age) - 161);
         }
 
-        if (this.sex == false) {
+        if (!this.sex) {
             RMR = (int) (.5 + (10 * this.weight) + (6.25 * this.height) - (5 * this.age) + 5);
         }
         System.out.println(this.RMR);
@@ -257,8 +256,8 @@ public class settingsLogic {
     }
 
     /**
-     * returns value of goal attribute
-     * @return the calorie
+     * returns user's calorie goal
+     * @return the user's calorie goal (negative goal --> losing weight, positive --> gaining, 0 --> maintaining)
      */
     public int getGoal() {
         return this.netGoal;
