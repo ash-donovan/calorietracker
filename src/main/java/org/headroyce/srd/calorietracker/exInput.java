@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class exInput extends BorderPane {
 
@@ -30,6 +32,7 @@ public class exInput extends BorderPane {
     private String[] items;
 
     public exInput(Stage stage, settingsLogic settingsLogic){
+
 
         s = stage;
 
@@ -71,6 +74,8 @@ public class exInput extends BorderPane {
         });
 
 
+
+
         met.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -91,6 +96,15 @@ public class exInput extends BorderPane {
         yur.setPadding(new Insets(25));
         yur.setSpacing(25);
         this.setTop(yur);
+
+        Date datey = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datey);
+
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+        int monthNow = calendar.get(Calendar.MONTH) + 1;
+
+
 
         calsBurned.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -118,7 +132,8 @@ public class exInput extends BorderPane {
 
                     try {
                         PrintWriter out = new PrintWriter("exerciseStore");
-                        out.print(t + "," + realCalsBurned + "," + name);
+                        out.print(t + "," + realCalsBurned + "," + name + "," + monthNow + "," + dayNow);
+                        out.close();
 
 
                     } catch (FileNotFoundException e) {

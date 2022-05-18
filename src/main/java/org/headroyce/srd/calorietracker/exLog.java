@@ -43,10 +43,22 @@ public class exLog extends BorderPane {
 
         }
 
+        Button reset = new Button("Reset");
+        reset.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                duration.clear();
+                calories.clear();
+                activity.clear();
+            }
+        });
 
 
         Button back = new Button("Back");
-        this.setTop(back);
+        HBox top = new HBox(back,reset);
+
+
+        this.setTop(top);
 
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
