@@ -46,10 +46,10 @@ public class exInput extends BorderPane {
         Text metTitle = new Text("Your activity's MET (Metabolic equivalent of task)");
         metTitle.setFont(new Font(20));
 
-        Text metDes = new Text("Your MET is the objective measure of the ratio of the rate at which a person expends energy, " +
-                "ralative to the mass of that person (Wikipedia). In other words, a 1 would be sittin down not doing anything and a 10 would sprinting as hard as you can for 5 miles.");
+        Text metDes = new Text("On a scale of 1-10, how hard was the exercise for you on average? " +
+                "A 1 is sitting, 5 is ");
         metDes.setTextAlignment(TextAlignment.CENTER);
-        metDes.setWrappingWidth(stage.getWidth()/2);
+        metDes.setWrappingWidth(stage.getWidth()/1.5);
         metDes.setFont(new Font(13));
 
         Slider met = new Slider(0, 10, 5);
@@ -60,6 +60,12 @@ public class exInput extends BorderPane {
 
         Text metVal = new Text("Your activity MET: " + met.getValue());
         metVal.setFont(new Font(13));
+
+        stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            metDes.setWrappingWidth(stage.getWidth()/1.5);
+
+        });
+
 
         met.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
