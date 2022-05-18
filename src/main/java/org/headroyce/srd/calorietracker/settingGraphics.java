@@ -96,10 +96,6 @@ public class settingGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-
-
-
-
                 Stage s = (Stage) settingGraphics.this.getScene().getWindow();
                 homeGraphics homeGraphic = new homeGraphics(s, settingsLogic);
                 if (!(settingsLogic.isGoalSet() || settingsLogic.isRmrSet())) {

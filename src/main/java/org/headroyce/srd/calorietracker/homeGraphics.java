@@ -78,16 +78,33 @@ public class homeGraphics extends BorderPane {
         Text exerciseTitle = new Text("EXERCISE");
         Text exerciseText = new Text("Click here to input exercise and calculate the amount of calories burned. " +
                 "You can also view your activity from today.");
+        exerciseText.setTextAlignment(TextAlignment.CENTER);
+        exerciseTitle.setTextAlignment(TextAlignment.CENTER);
+        exerciseTitle.setWrappingWidth(stage.getWidth()/1.5);
+
+
 
         Text calendarTitle = new Text("CALENDAR");
         Text calendarText = new Text("View your past exercise and diet history here");
+        calendarText.setTextAlignment(TextAlignment.CENTER);
+        calendarTitle.setTextAlignment(TextAlignment.CENTER);
+        calendarTitle.setWrappingWidth(stage.getWidth()/1.5);
+
+
 
         Text dietTitle = new Text("DIET");
         Text dietText = new Text("Input food you've eaten here, or view what you've eaten today.");
+        dietText.setTextAlignment(TextAlignment.CENTER);
+        dietTitle.setTextAlignment(TextAlignment.CENTER);
+        dietTitle.setWrappingWidth(stage.getWidth()/1.5);
+
+
 
         Text settingsTitle = new Text("SETTINGS");
         Text settingsText = new Text("Change your settings here. You can change your RMR or set a different goal.");
-
+        settingsText.setTextAlignment(TextAlignment.CENTER);
+        settingsTitle.setTextAlignment(TextAlignment.CENTER);
+        settingsTitle.setWrappingWidth(stage.getWidth()/1.5);
 
         //buttons to change tabs
         Button exercise = new Button("Exercise");
@@ -95,10 +112,25 @@ public class homeGraphics extends BorderPane {
         Button diet = new Button("Diet");
         Button settings = new Button("Settings");
 
-        //button sizing
-        exercise.setMaxSize(300, 300);
-        calendar.setMaxSize(300, 300);
-        diet.setMaxSize(300, 300);
+        VBox dietBox = new VBox(10, dietTitle, dietText, diet);
+        VBox exerciseBox = new VBox(10, exerciseTitle, exerciseText, exercise);
+        VBox calendarBox = new VBox(10, calendarTitle, calendarText, calendar);
+        VBox settingsBox = new VBox(10, settingsTitle, settingsText, settings);
+
+        dietBox.setAlignment(Pos.CENTER);
+        exerciseBox.setAlignment(Pos.CENTER);
+        calendarBox.setAlignment(Pos.CENTER);
+        settingsBox.setAlignment(Pos.CENTER);
+
+
+
+
+
+
+//        //button sizing
+//        exercise.setMaxSize(300, 300);
+//        calendar.setMaxSize(300, 300);
+//        diet.setMaxSize(300, 300);
 
 
         settings.setOnAction(new EventHandler<ActionEvent>() {
@@ -146,7 +178,6 @@ public class homeGraphics extends BorderPane {
         });
 
         VBox actions = new VBox(exercise, diet, calendar);
-        actions.setSpacing(20);
         actions.setAlignment(Pos.CENTER);
 
         this.setCenter(actions);
