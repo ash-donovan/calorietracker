@@ -11,6 +11,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class exGraphics extends BorderPane {
 
     public exGraphics(Stage stage, settingsLogic settingsLogic) {
@@ -25,7 +27,7 @@ public class exGraphics extends BorderPane {
         inputDes.setFont(new Font(15));
 
         Button input = new Button("Input");
-        input.setFont(new Font(15));
+       // input.setFont(Font.font(15));
 
         Text logDes = new Text("Access your activities from today here:");
         logDes.setFont(new Font(15));
@@ -33,7 +35,7 @@ public class exGraphics extends BorderPane {
 
 
         Button log = new Button("Log");
-        log.setFont(new Font(15));
+      //  log.setFont(new Font(15));
 
 
 
@@ -73,7 +75,12 @@ public class exGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Stage s = (Stage) exGraphics.this.getScene().getWindow();
-                exLog exLog = new exLog(settingsLogic);
+                exLog exLog = null;
+                try {
+                    exLog = new exLog(settingsLogic);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 Scene logPage = new Scene(exLog, s.getWidth(), s.getHeight());
                 s.setScene(logPage);
                 s.setTitle("Exercise Log");

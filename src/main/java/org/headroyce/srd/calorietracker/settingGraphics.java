@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class settingGraphics extends BorderPane {
 
 
@@ -101,6 +104,11 @@ public class settingGraphics extends BorderPane {
         bruh.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+
+
+
+
                 Stage s = (Stage) settingGraphics.this.getScene().getWindow();
                 homeGraphics homeGraphic = new homeGraphics(s, new settingsLogic());
                 Scene homeScene = new Scene(homeGraphic, s.getWidth(), s.getHeight());
