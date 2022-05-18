@@ -14,6 +14,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class RmrCalculator extends BorderPane {
 
     private settingsLogic settingsLogic;
@@ -143,7 +146,19 @@ public class RmrCalculator extends BorderPane {
                     s.setTitle("Settings");
                 }
 
+
+
+                try {
+                    PrintWriter out = new PrintWriter("userData");
+                    out.println(settingsLogic.getAge() + "," + settingsLogic.getWeight() + "," + settingsLogic.getHeight()
+                            + "," + settingsLogic.getSex() + "," + settingsLogic.getRMR()
+                            + "," + settingsLogic.getGoal() + "," + settingsLogic.getDailyCals());
+                    out.close();
+                } catch (FileNotFoundException f) {
+                    f.printStackTrace();
+                }
             }
+
         });
 
         Button back = new Button("Back");
@@ -194,7 +209,18 @@ public class RmrCalculator extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (settingsLogic.isGoalSet()) {
-                    homeGraphics home = new homeGraphics(stage, settingsLogic);
+
+                    try {
+                        PrintWriter out = new PrintWriter("userData");
+                        out.println(settingsLogic.getAge() + "," + settingsLogic.getWeight() + "," + settingsLogic.getHeight()
+                                + "," + settingsLogic.getSex() + "," + settingsLogic.getRMR()
+                                + "," + settingsLogic.getGoal() + "," + settingsLogic.getDailyCals());
+                        out.close();
+                    } catch (FileNotFoundException f) {
+                        f.printStackTrace();
+                    }
+
+                    homeGraphics home = new homeGraphics(stage, new settingsLogic());
                     Scene homeScene = new Scene(home, stage.getWidth(), stage.getHeight());
                     stage.setScene(homeScene);
                     stage.setTitle("Home");

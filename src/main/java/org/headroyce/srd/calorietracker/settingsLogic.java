@@ -1,5 +1,8 @@
 package org.headroyce.srd.calorietracker;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class settingsLogic {
 
     private int dailyCals;
@@ -224,6 +227,9 @@ public class settingsLogic {
         }
 
         this.age = a;
+
+
+
         return true;
     }
 
@@ -251,7 +257,7 @@ public class settingsLogic {
         if (!this.sex) {
             RMR = (int) (.5 + (10 * this.weight) + (6.25 * this.height) - (5 * this.age) + 5);
         }
-        System.out.println(this.RMR);
+
 
     }
 

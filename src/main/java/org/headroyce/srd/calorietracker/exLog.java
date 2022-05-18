@@ -11,12 +11,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
 public class exLog extends BorderPane {
 
-    public exLog(settingsLogic settingsLogic){
+    public exLog(settingsLogic settingsLogic) throws FileNotFoundException {
         ListView<String> exName = new ListView<String>();
         ObservableList<String> activity = FXCollections.observableArrayList();
         exName.setItems(activity);
+
 
         ListView<Integer> exDuration = new ListView<Integer>();
         ObservableList<Integer> duration = FXCollections.observableArrayList();
@@ -25,6 +31,19 @@ public class exLog extends BorderPane {
         ListView<Integer> calsBurned = new ListView<Integer>();
         ObservableList<Integer> calories = FXCollections.observableArrayList();
         calsBurned.setItems(calories);
+
+
+        Scanner scan = new Scanner(new File("exerciseStore"));
+        while(scan.hasNextLine()){
+            System.out.println(true);
+            String[] parts = scan.nextLine().split(",");
+            duration.add(Integer.parseInt(parts[0]));
+            calories.add(Integer.parseInt(parts[1]));
+            activity.add(parts[2]);
+
+        }
+
+
 
         Button back = new Button("Back");
         this.setTop(back);

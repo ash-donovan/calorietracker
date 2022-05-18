@@ -5,25 +5,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Main extends Application {
 
-    PrintWriter outputStream;
+  homeGraphics home;
+
+
     @Override
     public void start(Stage stage) throws IOException {
-        boolean isSettingsSet;
 
 //        homeGraphics home = new homeGraphics(stage, new settingsLogic());
-        isSettingsSet = false;
 
-//        if (no text file created) {
-//        isSettingsSet = false;
-          homeGraphics home = new homeGraphics(stage, new settingsLogic(isSettingsSet), 1);
-        // ^^creates first homeGraphics
-//        }
+        Scanner scanner = new Scanner(new File("userData"));
+
+            if(!scanner.hasNextLine()){
+            home = new homeGraphics(stage, new settingsLogic(), 1);
+            } else {
+                home = new homeGraphics(stage, new settingsLogic());
+            }
 
         Scene scene = new Scene(home, 500, 500);
         stage.setTitle("Home Page");

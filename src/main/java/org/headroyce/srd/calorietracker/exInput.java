@@ -19,11 +19,15 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class exInput extends BorderPane {
 
 
     private double metPass = 5;
     private Stage s;
+    private String[] items;
 
     public exInput(Stage stage, settingsLogic settingsLogic){
 
@@ -94,6 +98,7 @@ public class exInput extends BorderPane {
 
 
                 String t = time.getText();
+                String name = exerciseName.getText();
 
                 if (inputOk(t) != -1) {
 
@@ -109,6 +114,17 @@ public class exInput extends BorderPane {
                     yur.getChildren().clear();
                     yur.getChildren().addAll(title, textFields, metDes, met,
                     metVal, calsBurned, burnedBox);
+
+
+                    try {
+                        PrintWriter out = new PrintWriter("exerciseStore");
+                        out.print(t + "," + realCalsBurned + "," + name);
+
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
 
                 }
 

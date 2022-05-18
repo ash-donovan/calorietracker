@@ -7,25 +7,33 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class dietGraphics extends BorderPane {
 
    private String name;
     private int calTake;
 
+    private ListView<String> names = new ListView<String>();
+    private ObservableList<String> items = FXCollections.observableArrayList();
+
+   private ListView<Integer> calCounts = new ListView<Integer>();
+    private ObservableList<Integer> calItems = FXCollections.observableArrayList();
 
 
-    public dietGraphics(settingsLogic settingsLogic) {
+    public dietGraphics(settingsLogic settingsLogic) throws FileNotFoundException {
+
+
+
 
         Date datey = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -34,15 +42,17 @@ public class dietGraphics extends BorderPane {
         int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
         int monthNow = calendar.get(Calendar.MONTH) + 1;
 
-
-       ListView<String> names = new ListView<String>();
-       ObservableList<String> items = FXCollections.observableArrayList();
         names.setItems(items);
-
-
-        ListView<Integer> calCounts = new ListView<Integer>();
-        ObservableList<Integer> calItems = FXCollections.observableArrayList();
         calCounts.setItems(calItems);
+
+        Scanner foodScan = new Scanner(new File("foodStore.txt"));
+
+        while(foodScan.hasNextLine()){
+           String parts = foodScan.nextLine();
+           String[] partsy = parts.split(",");
+           items.add(partsy[2]);
+           calItems.add(Integer.parseInt(partsy[3]));
+        }
 
 
 
@@ -108,7 +118,7 @@ public class dietGraphics extends BorderPane {
 
 
                     try {
-                        PrintWriter out = new PrintWriter("foodStore");
+                        PrintWriter out = new PrintWriter("foodStore.txt");
                         for(int i = 0; i < items.size(); i++) {
                             out.println(monthNow + "," + dayNow + "," + items.get(i) + "," + calItems.get(i));
                         }
@@ -125,11 +135,32 @@ public class dietGraphics extends BorderPane {
                 s.setTitle("Home");
             }
         });
-        HBox actions = new HBox(home, addMeal);
+
+
+        Button clear = new Button("Reset");
+        clear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+             items.clear();
+             calItems.clear();
+            }
+        });
+
+
+
+        HBox actions = new HBox(home,spacerMaker2(), addMeal, spacerMaker2(), clear);
+        actions.setAlignment(Pos.CENTER);
         HBox lists = new HBox(names, calCounts);
         this.setTop(actions);
       this.setCenter(lists);
     }
+
+    private Region spacerMaker2() {
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return spacer;
+    }
+
 
 
 
