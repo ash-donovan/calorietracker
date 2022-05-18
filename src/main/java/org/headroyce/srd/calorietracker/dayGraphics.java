@@ -82,12 +82,14 @@ public class dayGraphics extends BorderPane {
         all.setAlignment(Pos.CENTER);
         all.setSpacing(50);
 
-        Text goals = new Text("You aren't hitting your goals for today quite yet! Keep Working!");
+        Text goals = new Text("You aren't hitting your goal of "  + calGoal + " for today quite yet! Keep Working!");
         int goalDistance = calGoal - totalCals;
         goals.setFont(Font.font(15));
         if(Math.abs(goalDistance) < 50){
-            goals.setText("You're doing well today! You are within 50 calories away from your goals!");
+            goals.setText("You're doing well today! You are "  + goalDistance
+                    + " calories away from your goal of " + calGoal + " !");
             }
+
 
 
 
