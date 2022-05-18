@@ -107,7 +107,7 @@ public class homeGraphics extends BorderPane {
             @Override
             public void handle(ActionEvent actionEvent) {
                 dietGraphics dietGraphic = new dietGraphics(homeGraphics.this.settingsLogic);
-                Scene dietScene = new Scene(dietGraphic, s.getWidth(), s.getHeight());
+                Scene dietScene = new Scene(dietGraphic, s.getHeight(), s.getWidth());
                 s.setScene(dietScene);
                 s.setTitle("Diet Tab");
             }
